@@ -13,6 +13,19 @@ buildscript {
     }
 }
 
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        jcenter() // Warning: this repository is going to shut down soon
+        maven { url 'https://jitpack.io' }
+
+        maven { url  "https://repo.sovrin.org/repository/maven-public"  }
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+        mavenLocal()
+    }
+}
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
