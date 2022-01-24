@@ -1,9 +1,10 @@
-/*
 package com.sirius.driverlicense.transform
+
 
 import com.sirius.driverlicense.models.ui.ItemActions
 import com.sirius.driverlicense.models.ui.ItemContacts
 import com.sirius.driverlicense.repository.EventRepository
+import com.sirius.driverlicense.ui.chats.chats.message.*
 
 import com.sirius.library.agent.aries_rfc.feature_0036_issue_credential.messages.OfferCredentialMessage
 import com.sirius.library.agent.aries_rfc.feature_0037_present_proof.messages.RequestPresentationMessage
@@ -36,39 +37,33 @@ class EventTransform() {
             return contact
         }
 
-     */
-/*   fun eventToBaseItemMessage(event: Event?): BaseItemMessage {
+        fun eventToBaseItemMessage(event: Event?): BaseItemMessage {
             if (event == null) {
                 return TextItemMessage(event = null)
             }
             val message = event.message()
             if (message is Invitation) {
-                val message = ConnectItemMessage(event)
+                val message = ConnectItemMessage(event = event)
                 return message
             }
-            *//*
-*/
-/* if(message is ConnRequest){
-                 return OfferItemMessage(event)
-             }*//*
-*/
-/*
+             if(message is ConnRequest){
+                 return OfferItemMessage(event = event)
+             }
             if (message is OfferCredentialMessage) {
-                return OfferItemMessage(event)
+                return OfferItemMessage(event = event)
             }
             if (message is RequestPresentationMessage) {
-                return ProverItemMessage(event)
+                return ProverItemMessage(event = event)
             }
             if (message is QuestionMessage) {
-                return QuestionItemMessage(event)
+                return QuestionItemMessage(event = event)
             }
 
             if (message is Message) {
                 return TextItemMessage(event)
             }
             return TextItemMessage(event = null)
-        }*//*
-
+        }
 
         fun eventToItemActions(event: Event?): ItemActions {
             if (event == null) {
@@ -88,8 +83,7 @@ class EventTransform() {
             return ItemActions(message?.getId()?:"", type, hint)
         }
 
-       */
-/* fun itemActionToEvent(itemActions: ItemActions?, eventRepository: EventRepository): Event? {
+     /*   fun itemActionToEvent(itemActions: ItemActions?, eventRepository: EventRepository): Event? {
             return eventRepository.getEvent(itemActions?.id ?: "")
         }
 
@@ -98,7 +92,6 @@ class EventTransform() {
             eventRepository: EventRepository
         ): Event? {
             return eventRepository.getEvent(itemContacts?.id ?: "")
-        }*//*
-
+        }*/
     }
-}*/
+}

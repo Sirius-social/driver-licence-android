@@ -134,4 +134,35 @@ class AppPref {
         return isLoggedIn
     }
 
+
+    fun setPoliceUser(user: User?) {
+        val userKey = getEncryptionDefault().encryptOrNull("user_police") ?: ""
+        val userJson = Gson().toJson(user)
+        with(prefs.edit()) {
+            putString(userKey, getEncryptionDefault().encryptOrNull(userJson) ?: "")
+            apply()
+        }
+    }
+
+    fun getPoliceUser(): User? {
+        try {
+            val userKey = getEncryptionDefault().encryptOrNull("user_police") ?: ""
+            val userJsonCrypt = prefs.getString(userKey, "")
+            val userJson = getEncryptionDefault().decryptOrNull(userJsonCrypt)
+            return Gson().fromJson(
+                userJson,
+                User::class.java
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return null
+    }
+
+
+    fun isPoliceLoggedIn(): Boolean {
+        val isLoggedIn = getUser()?.uid != null
+        return isLoggedIn
+    }
+
 }

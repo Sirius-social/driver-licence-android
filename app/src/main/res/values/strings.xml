@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">DriverLicense</string>
+    <string name="app_name_police">PoliceDriverLicense</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -10,4 +11,74 @@
     <string name="ok_button">OK</string>
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string name="auth_first_title" >Lets get started…</string>
+    <string name="auth_first_hint" >Introduce yourself, Enter your name or nickname so that we know how to contact you. This name will be displayed to other members of our system</string>
+    <string name="auth_first_hint_name" >First name</string>
+    <string name="auth_first_hint_name_or_nick" >Name</string>
+    <string name="auth_first_hint_lastname" >Last name</string>
+    <string name="auth_next" >Next</string>
+    <string name="auth_start" >Start</string>
+    <string name="auth_skip" >Skip</string>
+    <string name="auth_login" >Login</string>
+    <string name="auth_pass" >Password</string>
+    <string name="auth_change_label" >Change name</string>
+
+
+    <string name="auth_second_title" >Welcome, %s</string>
+    <string name="auth_second_hint" >Please create a password for your wallet. You will need it if you want to export, import or restore the wallet.</string>
+    <string name="auth_second_second_hint" >Please create a login and password for your wallet. You will need it if you want to export, import or restore the wallet.</string>
+    <string name="auth_second_hint_phone" >Phone</string>
+    <string name="auth_second_hint_email" >Email</string>
+
+    <string name="auth_third_third_title" >Lets secure your identity wallet</string>
+    <string name="auth_third_third_hint" >Please write down or take a screenshot of this passphrase. You will need it to access your wallet. </string>
+
+    <string name="auth_third_hint" >You are almost done. Few step above...</string>
+    <string name="auth_third_hint_face" >Tap here to enable face id</string>
+
+    <string name="auth_third_identity_hint" >Lets verify your identity</string>
+    <string name="auth_third_identity2_hint" >Confirming who you are, using government-issued identification will allow you to accept a variety of digital credentials into your wallet</string>
+    <string name="auth_third_identity_btn_yes" >Yes, confirm my identity</string>
+    <string name="auth_third_identity_btn_no" >No, do this later</string>
+
+    <string name="auth_third_choose_hint" >Choose an id to upload</string>
+    <string name="auth_third_choose_tap_hint" >Tap to select identification type</string>
+
+    <string name="auth_fourth_hint" >AS a backup, choose pin</string>
+    <string name="auth_fourth_hint_pin" >Choose 6-digit pin</string>
+    <string name="auth_fourth_hint_re_enter_pin" >Re-enter pin</string>
+
+
+    <string name="splash_screen_text" >Please wait, we are creating secure wallet and collecting some information...</string>
+
+
+    <string name="task_activity">Activity</string>
+    <string name="active_contacts">Chats</string>
+    <string name="drawer_scan_qr">Scan QR</string>
+    <string name="navigation_organizier">Organizer</string>
+    <string name="navigation_more">Profile</string>
+    <string name="camera_qr_scan_permission">For scan Qr you need to give permissions</string>
+    <string name="invite_qr_scan_hint_error">The scanned QR code is not an invitation, please scan another QR code.</string>
+    <string name="empty_connections_hint">All connections are created using the QR code</string>
+    <string name="all_chats_hint_button">New chat</string>
+    <string name="all_chats_hint">Start to chat here</string>
+
+
+    <string name="action_yes" >Yes</string>
+    <string name="action_decline" >Decline</string>
+    <string name="action_error" >Error</string>
+
+
+
+    <string name="message_connected_successfully" >Connection Approved</string>
+    <string name="message_connected_error" >Connection canceled</string>
+    <string name="message_offer_successfully" >Credentials accepted</string>
+    <string name="message_credentials_offer" >Credentials offered</string>
+    <string name="message_credentials_request" >Credentials requested</string>
+    <string name="message_credentials_request_declined" >Credentials request declined</string>
+    <string name="message_credentials_request_succes" >Credentials approved</string>
+    <string name="message_credentials_declined" >Credentials declined</string>
+    <string name="message_question_answered" >Question answered</string>
+    <string name="message_question_title" >Question</string>
 </resources>

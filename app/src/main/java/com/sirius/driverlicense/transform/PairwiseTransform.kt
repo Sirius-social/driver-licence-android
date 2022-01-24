@@ -1,4 +1,3 @@
-/*
 package com.sirius.driverlicense.transform
 
 import com.sirius.driverlicense.models.ui.ItemContacts
@@ -13,4 +12,4 @@ class PairwiseTransform {
            return ItemContacts(pairwise.their.did?:"",pairwise.their.label?:"", Date())
         }
     }
-}*/
+}

@@ -11,7 +11,21 @@
     <color name="colorPrimary">#6200EE</color>
 
     <color name="grey">#E4E4E4</color>
+    <color name="grey3">#D2D2D2</color>
     <color name="red">#C64A34</color>
     <color name="blue">#12145A</color>
     <color name="yellow">#F0BE53</color>
+
+    <color name="green">#6FCF97</color>
+
+    <color name="defaultColor">#000743</color>
+    <color name="backgroundColor">#FFFFFF</color>
+    <color name="backgroundColorWithAlpha">#BBFFFFFF</color>
+    <color name="hintColor">#8DA1BE</color>
+    <color name="disableColor">#DADADA</color>
+    <color name="transparent">#00FFFFFF</color>
+
+    <color name="lightDividerColor">#10212121</color>
+    <color name="dividerColor">#9194AC</color>
+    <color name="cardConnectionCredentials">#53366C</color>
 </resources>

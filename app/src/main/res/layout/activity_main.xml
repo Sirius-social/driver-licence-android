@@ -11,19 +11,32 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <FrameLayout
                 android:id="@+id/mainFrame"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_above="@+id/navigationBottom"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="0dp"
                 android:layout_marginBottom="0dp"
-                android:layout_above="@+id/navigationBottom"
-                app:layout_constraintBottom_toTopOf="@+id/navigationBottom"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-            <com.sirius.driverlicense.design.BottomNavView
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/navigationBottom"
+                android:layout_width="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_height="wrap_content"
+                android:background="@color/backgroundColor"
+                app:labelVisibilityMode="labeled"
+                app:itemTextColor="@color/selector_navigation_icon_light"
+                app:itemIconTint="@color/selector_navigation_icon_light"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:menu="@menu/bottom_nav_menu" />
+
+       <!--     <com.sirius.driverlicense.design.BottomNavView
                 android:id="@+id/navigationBottom"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
@@ -31,7 +44,7 @@
                 android:layout_gravity="bottom"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent" />-->
 
         </RelativeLayout>
 

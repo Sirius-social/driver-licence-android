@@ -9,6 +9,7 @@ import com.sirius.driverlicense.base.AppPref
 import com.sirius.driverlicense.base.ui.BaseActivity
 import com.sirius.driverlicense.databinding.ActivitySplashBinding
 import com.sirius.driverlicense.ui.activities.auth.AuthActivity
+import com.sirius.driverlicense.ui.activities.loader.LoaderActivity
 import com.sirius.driverlicense.ui.activities.tutorial.TutorialActivity
 
 
@@ -29,13 +30,13 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashActivityModel>(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (AppPref.getInstance().isLoggedIn()) {
-           // LoaderActivity.newInstance(this)
+            LoaderActivity.newInstance(this, false)
         } else {
-            if(AppPref.getInstance().isTutorialDone()){
-                AuthActivity.newInstance(this)
-            }else{
-                TutorialActivity.newInstance(this)
-            }
+          //  if(AppPref.getInstance().isTutorialDone()){
+                AuthActivity.newInstance(this, false)
+         //   }else{
+       //         TutorialActivity.newInstance(this)
+        //    }
         }
         finish()
     }

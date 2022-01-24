@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.sirius.driverlicense.ui.auth.auth_first.AuthFirstViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:padding="12dp"
+            android:id="@+id/icon"
+            android:src="@drawable/ic_police" />
+
+        <TextView
+            android:id="@+id/firstTitle"
+            style="@style/Regular19"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/auth_first_title"
+            android:textAllCaps="true"
+            android:textColor="@color/black" />
+
+
+        <TextView
+            android:id="@+id/firstHint"
+            style="@style/Regular15"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_margin="16dp"
+            android:text="@string/auth_first_hint"
+            android:textColor="@color/black" />
+
+
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/Regular15"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:text="@string/auth_first_hint_name_or_nick"
+                android:textAllCaps="true"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:lines="1"
+                android:inputType="textPersonName"
+                android:singleLine="true"
+                android:id="@+id/nameEditText"
+                android:backgroundTint="@color/black" />
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:id="@+id/nextLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="8dp"
+            android:onClick="@{viewModel::onNextClick}"
+            android:visibility="@{viewModel.nextVisibilityLiveData}"
+            android:padding="16dp">
+
+            <TextView
+                style="@style/Regular19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/auth_next"
+                android:textAllCaps="true"
+                android:textColor="@color/black" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="16dp"
+
+                android:src="@drawable/btn_next" />
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

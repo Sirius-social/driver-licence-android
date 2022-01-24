@@ -8,14 +8,17 @@ import com.sirius.driverlicense.base.App
 import com.sirius.driverlicense.base.AppPref
 import com.sirius.driverlicense.base.ui.BaseActivity
 import com.sirius.driverlicense.databinding.ActivityAuthBinding
+import com.sirius.driverlicense.ui.auth.auth_first.AuthFirstFragment
+import com.sirius.driverlicense.ui.auth.auth_second_second.AuthSecondSecondFragment
 
 
 class AuthActivity : BaseActivity<ActivityAuthBinding, AuthActivityModel>() {
 
     companion object {
         @JvmStatic
-        fun newInstance(context: Context) {
+        fun newInstance(context: Context, isPolice: Boolean) {
             val intent = Intent(context, AuthActivity::class.java)
+            intent.putExtra("isPolice",isPolice)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(intent)
         }
@@ -39,11 +42,21 @@ class AuthActivity : BaseActivity<ActivityAuthBinding, AuthActivityModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-       /* if(AppPref.getInstance().getUser()?.name.isNullOrEmpty()){
-            showPage(AuthFirstFragment())
+        val isPolice =  intent?.getBooleanExtra("isPolice", false) ?: false
+        if(isPolice){
+            if(AppPref.getInstance().getPoliceUser()?.name.isNullOrEmpty()){
+                showPage(AuthFirstFragment.newInstance(isPolice))
+            }else{
+                showPage(AuthSecondSecondFragment.newInstance(isPolice))
+            }
         }else{
-            showPage(AuthSecondSecondFragment())
-        }*/
+            if(AppPref.getInstance().getUser()?.name.isNullOrEmpty()){
+                showPage(AuthFirstFragment.newInstance(isPolice))
+            }else{
+                showPage(AuthSecondSecondFragment.newInstance(isPolice))
+            }
+        }
+
     }
 
     override fun subscribe() {

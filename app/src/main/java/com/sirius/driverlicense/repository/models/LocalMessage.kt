@@ -2,7 +2,9 @@ package com.sirius.driverlicense.repository.models
 
 import com.j256.ormlite.field.DatabaseField
 import com.j256.ormlite.table.DatabaseTable
-
+import com.sirius.library.agent.pairwise.Pairwise
+import com.sirius.library.messaging.Message
+import com.sirius.library.mobile.helpers.PairwiseHelper
 
 
 import java.util.*
@@ -59,7 +61,7 @@ class LocalMessage : DatabaseIdModel {
     @DatabaseField(columnName = "canceledComment")
     var canceledCause: String? = null
 
-  /*  fun message(): Message? {
+    fun message(): Message? {
         var restored: Message? = null
         try {
             restored =  Message.restoreMessageInstance(message).second
@@ -71,5 +73,5 @@ class LocalMessage : DatabaseIdModel {
 
     fun restorePairwise() : Pairwise?{
        return PairwiseHelper.getInstance().getPairwise(pairwiseDid)
-    }*/
+    }
 }

@@ -1,14 +1,21 @@
 package com.sirius.driverlicense.transform
 
 import androidx.lifecycle.LiveData
-
+import com.sirius.library.agent.aries_rfc.feature_0036_issue_credential.messages.OfferCredentialMessage
+import com.sirius.library.agent.aries_rfc.feature_0037_present_proof.messages.RequestPresentationMessage
+import com.sirius.library.agent.aries_rfc.feature_0095_basic_message.Message
+import com.sirius.library.agent.aries_rfc.feature_0113_question_answer.messages.QuestionMessage
+import com.sirius.library.agent.aries_rfc.feature_0160_connection_protocol.messages.ConnRequest
+import com.sirius.library.agent.aries_rfc.feature_0160_connection_protocol.messages.Invitation
+import com.sirius.library.agent.listener.Event
 import com.sirius.driverlicense.models.ui.ItemActions
 import com.sirius.driverlicense.models.ui.ItemContacts
 import com.sirius.driverlicense.repository.EventRepository
 import com.sirius.driverlicense.repository.MessageRepository
 import com.sirius.driverlicense.repository.models.LocalMessage
+import com.sirius.driverlicense.ui.chats.chats.message.*
 
-import com.sirius.driverlicense.utils.extensions.observeOnceUnsafe
+
 import java.util.*
 
 class LocalMessageTransform {
@@ -18,23 +25,22 @@ class LocalMessageTransform {
             if (localMessage == null) {
                 return ItemContacts()
             }
-       /*     val message = localMessage.message()
+            val message = localMessage.message()
             var title = ""
-           *//* if (message is Invitation) {
+            if (message is Invitation) {
                 title = message.label() ?:""
-            }*//*
+            }
             var id = localMessage.id
             val pairwise = localMessage.restorePairwise()
             pairwise?.let {
                 id = localMessage.pairwiseDid
                 title = pairwise.their.label ?:""
-            }*/
-          //  val contact = ItemContacts(id ?: "", title, Date())
-            val contact = ItemContacts("", "title", Date())
+            }
+            val contact = ItemContacts(id ?: "", title, Date())
             return contact
         }
 
-       /* fun toBaseItemMessage(localMessage: LocalMessage?): BaseItemMessage {
+        fun toBaseItemMessage(localMessage: LocalMessage?): BaseItemMessage {
             if (localMessage == null) {
                 return TextItemMessage(localMessage = null)
             }
@@ -61,9 +67,9 @@ class LocalMessageTransform {
                 return TextItemMessage(localMessage)
             }
             return TextItemMessage(localMessage = null)
-        }*/
+        }
 
-       /* fun toItemActions(localMessage: LocalMessage?): ItemActions {
+        fun toItemActions(localMessage: LocalMessage?): ItemActions {
             if (localMessage == null) {
                 return ItemActions()
             }
@@ -97,7 +103,7 @@ class LocalMessageTransform {
                 hint = pairwise.their.label ?:""
             }
             return ItemActions(id ?: "", type, hint)
-        }*/
+        }
 
 
         fun toLocalMessage(

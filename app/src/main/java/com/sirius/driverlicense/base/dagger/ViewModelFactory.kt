@@ -3,9 +3,26 @@ package com.sirius.driverlicense.base.dagger
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.sirius.driverlicense.ui.activities.auth.AuthActivityModel
+import com.sirius.driverlicense.ui.activities.loader.LoaderActivityModel
 import com.sirius.driverlicense.ui.activities.main.MainActivityModel
+import com.sirius.driverlicense.ui.activities.mainPolice.MainActivityModelPolice
 import com.sirius.driverlicense.ui.activities.splash.SplashActivityModel
+import com.sirius.driverlicense.ui.activities.splashPolice.SplashPoliceActivityModel
 import com.sirius.driverlicense.ui.activities.tutorial.TutorialActivityModel
+import com.sirius.driverlicense.ui.auth.auth_first.AuthFirstViewModel
+import com.sirius.driverlicense.ui.auth.auth_fourth.AuthFourthViewModel
+import com.sirius.driverlicense.ui.auth.auth_second.AuthSecondViewModel
+import com.sirius.driverlicense.ui.auth.auth_second_second.AuthSecondSecondViewModel
+import com.sirius.driverlicense.ui.auth.auth_third.AuthThirdViewModel
+import com.sirius.driverlicense.ui.auth.auth_third_identity.AuthThirdChooseIdViewModel
+import com.sirius.driverlicense.ui.auth.auth_third_identity.AuthThirdIdentityViewModel
+import com.sirius.driverlicense.ui.auth.auth_third_third.AuthThirdThirdViewModel
+import com.sirius.driverlicense.ui.auth.auth_zero.AuthZeroViewModel
+import com.sirius.driverlicense.ui.chats.AllChatsViewModel
+import com.sirius.driverlicense.ui.main.MainDriverViewModel
+import com.sirius.driverlicense.ui.main.MainPoliceViewModel
+import com.sirius.driverlicense.ui.profile.MenuProfileViewModel
+import com.sirius.driverlicense.ui.scan.MenuScanQrViewModel
 
 
 import dagger.Binds
@@ -58,8 +75,27 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
+    @ViewModelKey(MainActivityModelPolice::class)
+    internal abstract fun bindMainActivityModelPolice(viewModel: MainActivityModelPolice): ViewModel
+
+
+
+    @Binds
+    @IntoMap
     @ViewModelKey(SplashActivityModel::class)
     internal abstract fun bindSplashActivityModel(viewModel: SplashActivityModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SplashPoliceActivityModel::class)
+    internal abstract fun bindSplashPoliceActivityModel(viewModel: SplashPoliceActivityModel): ViewModel
+
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(LoaderActivityModel::class)
+    internal abstract fun bindLoaderActivityModel(viewModel: LoaderActivityModel): ViewModel
+
 
 
     @Binds
@@ -76,11 +112,86 @@ abstract class ViewModelModule {
      * Fragments viewModel Here
      */
 
-/*
     @Binds
     @IntoMap
     @ViewModelKey(AuthZeroViewModel::class)
     internal abstract fun bindAuthZeroViewModel(viewModel: AuthZeroViewModel): ViewModel
-*/
+
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AuthFirstViewModel::class)
+    internal abstract fun bindAuthFirstViewModel(viewModel: AuthFirstViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AuthSecondViewModel::class)
+    internal abstract fun bindAuthSecondViewModel(viewModel: AuthSecondViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AuthSecondSecondViewModel::class)
+    internal abstract fun bindAuthSecondSecondViewModel(viewModel: AuthSecondSecondViewModel): ViewModel
+
+
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AuthThirdViewModel::class)
+    internal abstract fun bindAuthThirdViewModel(viewModel: AuthThirdViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AuthThirdThirdViewModel::class)
+    internal abstract fun bindAuthThirdThirdViewModel(viewModel: AuthThirdThirdViewModel): ViewModel
+
+
+
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AuthThirdIdentityViewModel::class)
+    internal abstract fun bindAuthThirdIdentityViewModel(viewModel: AuthThirdIdentityViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AuthThirdChooseIdViewModel::class)
+    internal abstract fun bindAuthThirdChooseIdViewModel(viewModel: AuthThirdChooseIdViewModel): ViewModel
+
+
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AuthFourthViewModel::class)
+    internal abstract fun bindAuthFourthViewModel(viewModel: AuthFourthViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MainPoliceViewModel::class)
+    internal abstract fun bindMainPoliceViewModel(viewModel: MainPoliceViewModel): ViewModel
+
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MainDriverViewModel::class)
+    internal abstract fun bindMainDriverViewModel(viewModel: MainDriverViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MenuScanQrViewModel::class)
+    internal abstract fun bindMenuScanQrViewModel(viewModel: MenuScanQrViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MenuProfileViewModel::class)
+    internal abstract fun bindMenuProfileViewModel(viewModel: MenuProfileViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AllChatsViewModel::class)
+    internal abstract fun bindAllChatsViewModel(viewModel: AllChatsViewModel): ViewModel
+
+
+
 
 }

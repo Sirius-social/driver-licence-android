@@ -14,7 +14,7 @@ import javax.inject.Singleton
 class UserRepository @Inject constructor(private val appExecutors: AppExecutors)  {
 
     var myUser = User()
-    //val userDao = App.getInstance().db.userDao()
+    var myUserPolice = User()
     init {
         setupUserFromPref()
     }
@@ -24,27 +24,25 @@ class UserRepository @Inject constructor(private val appExecutors: AppExecutors)
         user?.let {
             myUser = it
         }
+        val userPolice =  AppPref.getInstance().getPoliceUser()
+        userPolice?.let {
+            myUserPolice = it
+        }
     }
 
     fun saveUserToPref(){
         AppPref.getInstance().setUser(myUser)
     }
 
+    fun saveUserPoliceToPref(){
+        AppPref.getInstance().setPoliceUser(myUserPolice)
+    }
+
     fun logout(){
         AppPref.getInstance().setUser(null)
     }
 
-
-    // Room executes all queries on a separate thread.
-    // Observed Flow will notify the observer when the data has changed.
-    //val allWords: Flow<List<User>> = userDao.getAll()
-
-    // By default Room runs suspend queries off the main thread, therefore, we don't need to
-    // implement anything else to ensure we're not doing long running database work
-    // off the main thread.
-    @Suppress("RedundantSuspendModifier")
-    @WorkerThread
-    suspend fun insert(word: User) {
-        //wordDao.insert(word)
+    fun logoutPolice(){
+        AppPref.getInstance().setPoliceUser(null)
     }
 }
