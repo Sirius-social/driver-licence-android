@@ -50,7 +50,7 @@
     <string name="auth_fourth_hint_re_enter_pin" >Re-enter pin</string>
 
 
-    <string name="splash_screen_text" >Please wait, we are creating secure wallet and collecting some information...</string>
+    <string name="splash_screen_text" >Please wait, we are verifying information about your wallet...</string>
 
 
     <string name="task_activity">Activity</string>
@@ -68,17 +68,53 @@
     <string name="action_yes" >Yes</string>
     <string name="action_decline" >Decline</string>
     <string name="action_error" >Error</string>
+    <string name="action_show_details" >Show details</string>
 
 
 
-    <string name="message_connected_successfully" >Connection Approved</string>
+    <string name="message_connected_successfully" >Connection established</string>
     <string name="message_connected_error" >Connection canceled</string>
     <string name="message_offer_successfully" >Credentials accepted</string>
     <string name="message_credentials_offer" >Credentials offered</string>
     <string name="message_credentials_request" >Credentials requested</string>
+
+    <string name="message_offer_provided" >Credentials provided</string>
+
+    <string name="message_credentials_share" >Approve credentials</string>
+    <string name="message_credentials_share_success" >Credentials approved</string>
+
     <string name="message_credentials_request_declined" >Credentials request declined</string>
     <string name="message_credentials_request_succes" >Credentials approved</string>
     <string name="message_credentials_declined" >Credentials declined</string>
     <string name="message_question_answered" >Question answered</string>
     <string name="message_question_title" >Question</string>
+
+    <string name="days_tomorrow">Tomorrow</string>
+    <string name="days_today">Today</string>
+    <string name="days_yesterday">Yesterday</string>
+    <string name="scan_qr_to_licence">To get your documents scan QR code and follow the instructions</string>
+
+    <string name="list_of_connections">Connections</string>
+
+    <string name="proof_request_details">Details</string>
+    <string name="proof_request_error">Verification is not passed</string>
+    <string name="proof_request_canceled">Verification Canceled</string>
+    <string name="proof_request_success">Verification Passed</string>
+    <string name="proof_request_time_expire">Timed out</string>
+
+    <string name="tap_to_fill_the_field">Tap to fill the field</string>
+    <string name="verify_documents">share</string>
+    <string name="proof_request_cred_not_good_type_all">Fill in all the fields</string>
+    <string name="verify_driver_license">To verify documents scan QR code and follow the instructions</string>
+
+    <string name="scan_qrcode_hint">Show this QR code to policeman</string>
+
+    <string name="dialog_invite">Share documents</string>
+
+
+    <string name="dialog_yes">Yes</string>
+    <string name="dialog_no">No</string>
+    <string name="dialog_warning">Attention!</string>
+    <string name="dialog_exit_text">Do you want to logout from this account?</string>
+
 </resources>

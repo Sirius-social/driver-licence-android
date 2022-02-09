@@ -3,6 +3,7 @@ package com.sirius.driverlicense.ui.auth.auth_second_second
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 
 import androidx.lifecycle.Observer
 import com.sirius.driverlicense.R
@@ -23,10 +24,10 @@ class AuthSecondSecondFragment : BaseFragment<FragmentAuthSecondSecondBinding, A
 
     companion object {
         @JvmStatic
-        fun newInstance(isPolice: Boolean): AuthFirstFragment{
+        fun newInstance(isPolice: Boolean): AuthSecondSecondFragment{
             val args = Bundle()
             args.putBoolean("isPolice",isPolice)
-            val fragment = AuthFirstFragment()
+            val fragment = AuthSecondSecondFragment()
             fragment.arguments = args
             return fragment
         }
@@ -35,9 +36,11 @@ class AuthSecondSecondFragment : BaseFragment<FragmentAuthSecondSecondBinding, A
 
 
     override fun setupViews() {
-        super.setupViews()
-        val isPolice = arguments?.getBoolean("isPolice") ?: false
+        val isPolice = arguments?.getBoolean("isPolice",false) ?: false
+        Log.d("mylog209","isPolice="+isPolice)
         model.isPolice = isPolice
+        super.setupViews()
+
         if(isPolice){
             dataBinding.icon.setImageResource(R.drawable.ic_police)
         }else{

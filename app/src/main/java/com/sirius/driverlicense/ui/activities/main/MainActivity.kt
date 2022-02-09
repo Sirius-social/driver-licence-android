@@ -3,11 +3,14 @@ package com.sirius.driverlicense.ui.activities.main
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.lifecycle.Observer
 import com.sirius.driverlicense.R
 import com.sirius.driverlicense.base.App
 import com.sirius.driverlicense.base.ui.BaseActivity
 import com.sirius.driverlicense.databinding.ActivityMainBinding
 import com.sirius.driverlicense.ui.chats.AllChatsFragment
+import com.sirius.driverlicense.ui.chats.chats.ChatsFragment
+import com.sirius.driverlicense.ui.contacts.ContactsFragment
 import com.sirius.driverlicense.ui.profile.MenuProfileFragment
 import com.sirius.driverlicense.ui.scan.MenuScanQrFragment
 
@@ -37,7 +40,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        dataBinding.navigationBottom.setOnNavigationItemSelectedListener {
+        showPage(MenuProfileFragment())
+       /* dataBinding.navigationBottom.setOnNavigationItemSelectedListener {
             if (it.itemId == R.id.navigation_profile) {
                 showPage(MenuProfileFragment())
             }
@@ -46,36 +50,40 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityModel>() {
                  showPage(MenuScanQrFragment())
             }
             if (it.itemId == R.id.navigation_chats) {
-                showPage(AllChatsFragment())
+                showPage(ContactsFragment())
             }
 
             return@setOnNavigationItemSelectedListener true
-        }
+        }*/
         //  dataBinding.navigationBottom.onBottomNavClickListener = model.getOnBottomNavClickListner()
     }
 
     override fun subscribe() {
         super.subscribe()
 
-        /*  model.selectedTab.observe(this, Observer {
+        /* model.selectedTab.observe(this, Observer {
               dataBinding.navigationBottom.selectedTabLiveData.value = it
-          })
+          })*/
 
           model.invitationStartLiveData.observe(this, Observer {
               // pushPage(ValidatingFragment())
               val item = model.getMessage(it)
-              pushPage(ChatsFragment.newInstance(item))
+              popPage(ChatsFragment.newInstance(item))
+              //pushPage(ChatsFragment.newInstance(item))
           })
 
           model.invitationErrorLiveData.observe(this, Observer {
-              pushPage(ErrorFragment.newInstance(it.second))
+           //   pushPage(ErrorFragment.newInstance(it.second))
+              model.onShowToastLiveData.postValue(it.second)
           })
 
           model.invitationSuccessLiveData.observe(this, Observer {
               val item = model.getMessage(it)
-              showPage(MenuFragment())
-              pushPage(ChatsFragment.newInstance(item))
-          })*/
+            //  showPage(MenuFragment())
+              popPage(ChatsFragment.newInstance(item))
+
+             // pushPage(ChatsFragment.newInstance(item))
+          })
     }
 
 

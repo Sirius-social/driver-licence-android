@@ -77,7 +77,7 @@ class MyWebChromeClient(val activity: AppCompatActivity) : WebChromeClient() {
         }
         request?.resources?.forEach {
             if(RESOURCE_VIDEO_CAPTURE == it){
-                PermissionHelper.checkPermissionsOnlyForCamera(activity,1009)
+                PermissionHelper.checkPermissionsForCamera(activity,1009)
             }
             Log.d("mylog200","onPermissionRequest res="+it)
         }

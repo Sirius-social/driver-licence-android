@@ -29,7 +29,7 @@ class SplashPoliceActivity : BaseActivity<ActivitySplashBinding, SplashPoliceAct
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (AppPref.getInstance().isLoggedIn()) {
+        if (AppPref.getInstance().isPoliceLoggedIn()) {
             LoaderActivity.newInstance(this,true)
         } else {
           //  if(AppPref.getInstance().isTutorialDone()){

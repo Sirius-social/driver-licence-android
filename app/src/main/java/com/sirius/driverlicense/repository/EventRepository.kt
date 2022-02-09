@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.sirius.driverlicense.repository.models.LocalMessage
 import com.sirius.driverlicense.utils.DateUtils
 import com.sirius.library.agent.aries_rfc.feature_0036_issue_credential.messages.OfferCredentialMessage
+import com.sirius.library.agent.aries_rfc.feature_0036_issue_credential.messages.ProposeCredentialMessage
 import com.sirius.library.agent.aries_rfc.feature_0037_present_proof.messages.RequestPresentationMessage
 import com.sirius.library.agent.aries_rfc.feature_0113_question_answer.messages.QuestionMessage
 import com.sirius.library.agent.aries_rfc.feature_0160_connection_protocol.messages.ConnRequest
@@ -37,6 +38,8 @@ class EventRepository @Inject constructor(val messageRepository: MessageReposito
               localMessage.type = "prover"
           }else if(event?.second is QuestionMessage){
               localMessage.type = "question"
+          }else if(event?.second is ProposeCredentialMessage){
+              localMessage.type = "propose"
           }
           if (event?.second?.messageObjectHasKey("sent_time") == true) {
               val sentTime = event?.second?.getStringFromJSON("sent_time")

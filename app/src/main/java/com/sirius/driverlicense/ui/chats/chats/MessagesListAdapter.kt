@@ -16,6 +16,9 @@ import com.sirius.driverlicense.ui.chats.chats.message.BaseItemMessage
 class MessagesListAdapter :
     BaseMultiRecyclerViewAdapter<BaseItemMessage>() {
 
+    override fun getItemCount(): Int {
+        return super.getItemCount()
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutRes = MessageViewHolder.getLayoutResFromType(viewType)
         val view =

@@ -19,6 +19,11 @@ import com.sirius.driverlicense.ui.auth.auth_third_identity.AuthThirdIdentityFra
 import com.sirius.driverlicense.ui.auth.auth_third_third.AuthThirdThirdFragment
 import com.sirius.driverlicense.ui.auth.auth_zero.AuthZeroFragment
 import com.sirius.driverlicense.ui.chats.AllChatsFragment
+import com.sirius.driverlicense.ui.chats.chats.ChatsFragment
+import com.sirius.driverlicense.ui.connections.ConnectionCardFragment
+import com.sirius.driverlicense.ui.connections.ConnectionRequestDetailFragment
+import com.sirius.driverlicense.ui.contacts.ContactsFragment
+import com.sirius.driverlicense.ui.inviteUser.InviteUserFragment
 import com.sirius.driverlicense.ui.main.MainDriverFragment
 import com.sirius.driverlicense.ui.main.MainPoliceFragment
 import com.sirius.driverlicense.ui.profile.MenuProfileFragment
@@ -72,6 +77,11 @@ interface AppComponent {
     fun inject(fragment: MenuScanQrFragment)
     fun inject(fragment: MenuProfileFragment)
     fun inject(fragment: AllChatsFragment)
+    fun inject(fragment: ChatsFragment)
+    fun inject(fragment: ContactsFragment)
+    fun inject(fragment: ConnectionCardFragment)
+    fun inject(fragment: ConnectionRequestDetailFragment)
+    fun inject(fragment: InviteUserFragment)
 
 
 }

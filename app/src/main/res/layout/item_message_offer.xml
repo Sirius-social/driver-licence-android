@@ -13,15 +13,20 @@
     </data>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardCornerRadius="8dp"
-            android:layout_margin="16dp"
+
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
             app:contentPadding="16dp"
             app:cardUseCompatPadding="true"
-            app:cardBackgroundColor="@color/green">
+            app:cardBackgroundColor="@color/blue2">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -61,16 +66,58 @@
                         android:layout_weight="1"
                         android:orientation="vertical">
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            style="@style/FontBold"
-                            android:textSize="16sp"
-                            android:id="@+id/title"
-                            android:layout_marginLeft="8dp"
-                            android:textColor="@color/blue"
-                            android:text="@{item.title}"
-                            tools:text="Permanent Resident Card"/>
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                style="@style/FontBold"
+                                android:textSize="16sp"
+                                android:id="@+id/title"
+                                android:layout_weight="1"
+                                android:layout_marginLeft="8dp"
+                                android:textColor="@color/blue"
+                                android:text="@{item.title}"
+                                tools:text="Permanent Resident Card"/>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:gravity="center"
+
+                                >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    style="@style/FontBold"
+                                    android:id="@+id/status"
+                                    android:textSize="12sp"
+                                    android:visibility="gone"
+                                    android:textColor="@color/white"
+                                    android:textAllCaps="true"
+                                    />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    style="@style/FontBold"
+                                    android:id="@+id/statusDate"
+                                    android:textSize="12sp"
+                                    android:textColor="@color/blue"
+                                    android:text="12/22/2021"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -81,72 +128,26 @@
                             tools:text="USCIS"
                             android:text="@{item.hint}"/>
 
+
+
+
                         <androidx.recyclerview.widget.RecyclerView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
+                            android:visibility="gone"
                             android:nestedScrollingEnabled="false"
                             tools:itemCount="4"
-                            android:visibility="@{item.detailsVisibilityLiveData}"
+
                             tools:listitem="@layout/view_items_credentials_detail"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                             android:id="@+id/attachList"/>
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="8dp"
 
-                            android:id="@+id/detailsBtn">
-                            <TextView
-                                android:layout_width="wrap_content"
-
-                                android:layout_height="wrap_content"
-
-                                style="@style/Regular14"
-                                />
-                            <ImageView
-                                android:layout_width="15dp"
-                                android:layout_height="15dp"
-                                android:layout_gravity="bottom"
-                           />
-
-                        </LinearLayout>
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:padding="20dp"
-                      >
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            style="@style/FontBold"
-                            android:id="@+id/status"
-                            android:textSize="12sp"
-                            android:textColor="@color/white"
-                            android:textAllCaps="true"
-                            />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            style="@style/FontBold"
-                            android:id="@+id/statusDate"
-                            android:textSize="12sp"
-                            android:textColor="@color/white"
-                            android:text="12/22/2021"/>
-
-                    </LinearLayout>
                 </LinearLayout>
 
 
@@ -168,8 +169,10 @@
                         android:gravity="center"
                         android:textAllCaps="true"
                         style="@style/Regular15"
+                        android:padding="8dp"
+                        android:background="@drawable/bg_accent_rounded_button_disabled"
                         android:id="@+id/cancelBtn"
-                        android:textColor="@color/hintColor"
+                        android:textColor="@color/grey3"
                         />
 
                     <TextView
@@ -180,8 +183,10 @@
                         android:gravity="center"
                         android:textAllCaps="true"
                         style="@style/Regular15"
+                        android:padding="8dp"
+                        android:background="@drawable/bg_accent_rounded_button_normal"
                         android:id="@+id/yesBtn"
-                        android:textColor="@color/blue"
+                        android:textColor="@color/white"
 
                         android:text="@string/action_yes"/>
                 </LinearLayout>
@@ -189,5 +194,19 @@
 
 
         </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/action_show_details"
+            android:gravity="center"
+            style="@style/Regular15"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:padding="8dp"
+            android:background="@drawable/bg_accent_rounded_button_normal"
+            android:id="@+id/showDetailsBtn"
+            android:textColor="@color/white"
+            />
     </LinearLayout>
 </layout>

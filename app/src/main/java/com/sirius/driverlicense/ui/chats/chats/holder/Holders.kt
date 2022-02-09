@@ -1,16 +1,20 @@
 package com.sirius.driverlicense.ui.chats.chats.holder
 
+import android.app.AlertDialog
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.RecyclerView
 import com.sirius.driverlicense.R
 import com.sirius.driverlicense.base.App
 import com.sirius.driverlicense.databinding.*
 import com.sirius.driverlicense.ui.chats.chats.QuestionAnswerAdapter
-import com.sirius.driverlicense.ui.chats.chats.message.BaseItemMessage
-import com.sirius.driverlicense.ui.chats.chats.message.OfferItemMessage
-import com.sirius.driverlicense.ui.chats.chats.message.ProverItemMessage
-import com.sirius.driverlicense.ui.chats.chats.message.QuestionItemMessage
+import com.sirius.driverlicense.ui.chats.chats.message.*
+import com.sirius.driverlicense.ui.connections.ConnectionDetailsAdapter
+import com.sirius.driverlicense.ui.credentials.CredentialsDetailAdapter
 import com.sirius.driverlicense.utils.DateUtils
 
 
@@ -23,18 +27,17 @@ class TextMessageViewHolder(itemView: View) : MessageViewHolder(itemView) {
         binding?.item = item
     }
 }
-
-class OfferMessageViewHolder(itemView: View) : MessageViewHolder(itemView) {
-    var binding: ItemMessageOfferBinding? =
-        DataBindingUtil.bind<ItemMessageOfferBinding>(itemView)
+class ProposeCredentialMessageViewHolder(itemView: View) : MessageViewHolder(itemView) {
+    var binding: ItemMessageProposeBinding? =
+        DataBindingUtil.bind<ItemMessageProposeBinding>(itemView)
 
     override fun bind(item: BaseItemMessage) {
-      /*  val offer = item as OfferItemMessage
+        val offer = item as ProposeCredentialItemMessage
         binding?.item = offer
-        val adapter = CredentialsDetailAdapter()
+        /*val adapter = CredentialsDetailAdapter()
         adapter.setDataList(offer.detailList)
         binding?.attachList?.isNestedScrollingEnabled = false
-        binding?.attachList?.adapter = adapter
+        binding?.attachList?.adapter = adapter*/
         binding?.cancelBtn?.setOnClickListener {
             item.cancel()
         }
@@ -43,14 +46,35 @@ class OfferMessageViewHolder(itemView: View) : MessageViewHolder(itemView) {
             item.accept()
         }
 
-        binding?.detailsBtn?.setOnClickListener {
-            if( item.detailsVisibilityLiveData.value == View.GONE){
-                item.detailsVisibilityLiveData.postValue(View.VISIBLE)
-                item.notifyItem()
+        binding?.showDetailsBtn?.setOnClickListener {
+            val builder = AlertDialog.Builder(it.context)
+            val view =   LayoutInflater.from(it.context).inflate(R.layout.dialog_connection_card,null,false)
+            val recyclerView  : RecyclerView = view.findViewById(R.id.detailsRecyclerView)
+            val nameTextView  : TextView = view.findViewById(R.id.connectionUserTextView)
+            val iconView  : ImageView = view.findViewById(R.id.connectionIconView)
+            val typeView  : TextView = view.findViewById(R.id.connectionTypeTextView)
+            val connectionDescriptionTextView  : TextView = view.findViewById(R.id.connectionDescriptionTextView)
+
+            //  var adapter: ConnectionDetailsAdapter? = null
+            val adapter = CredentialsDetailAdapter()
+            adapter.setDataList(offer.detailList)
+            //   binding?.attachList?.isNestedScrollingEnabled = false
+            recyclerView.adapter = adapter
+
+            if(item.name?.contains("driver",true)==true){
+                iconView.setImageResource(R.drawable.ic_driver_license)
+            }else if(item.name?.contains("passport",true)==true){
+                iconView.setImageResource(R.drawable.ic_pass)
             }else{
-                item.detailsVisibilityLiveData.postValue(View.GONE)
-                item.notifyItem()
+                iconView.setImageResource(R.drawable.documents)
             }
+
+            nameTextView.text = item.name
+            connectionDescriptionTextView.text = item.hint
+
+
+            builder.setView(view)
+            builder.show()
         }
 
         if(item.isLoading){
@@ -60,7 +84,95 @@ class OfferMessageViewHolder(itemView: View) : MessageViewHolder(itemView) {
             binding?.progressBar?.visibility = View.GONE
             binding?.buttonsLayout?.visibility =  View.VISIBLE
         }
-        binding?.statusDate?.text =  DateUtils.getStringFromDate(item.date, DateUtils.PATTERN_ddMMMyyyyBase, false)*/
+        binding?.statusDate?.text =  DateUtils.getStringFromDate(item.date, DateUtils.PATTERN_ddMMMyyyyBase, false)
+    }
+}
+
+class ProposeCredentialAcceptedMessageViewHolder(itemView: View) : MessageViewHolder(itemView) {
+    var binding: ItemMessageProposeAcceptedBinding? = DataBindingUtil.bind<ItemMessageProposeAcceptedBinding>(itemView)
+    override fun bind(item: BaseItemMessage) {
+        if(item.isError){
+            binding?.cardView?.setCardBackgroundColor(App.getContext().getColor(R.color.red))
+            binding?.text?.text = App.getContext().resources.getString(R.string.message_credentials_declined)
+            binding?.iconView?.setImageResource(R.drawable.ic_attention)
+        }else{
+            binding?.cardView?.setCardBackgroundColor(App.getContext().getColor(R.color.blue))
+            binding?.text?.text = App.getContext().resources.getString(R.string.message_offer_successfully)
+            binding?.iconView?.setImageResource(R.drawable.ic_check_outline)
+        }
+
+
+
+        binding?.dateText?.text = DateUtils.getStringFromDate(item.date, DateUtils.PATTERN_DATETIME_DOT, false)
+        var hint = ""
+        if(item is ProposeCredentialItemMessage ){
+            val offer = item as ProposeCredentialItemMessage
+            hint = offer.hint ?:""
+        }
+        binding?.nameCredText?.text =  item.getTitle()
+    }
+}
+
+
+
+class OfferMessageViewHolder(itemView: View) : MessageViewHolder(itemView) {
+    var binding: ItemMessageOfferBinding? =
+        DataBindingUtil.bind<ItemMessageOfferBinding>(itemView)
+
+    override fun bind(item: BaseItemMessage) {
+       val offer = item as OfferItemMessage
+        binding?.item = offer
+        /*val adapter = CredentialsDetailAdapter()
+        adapter.setDataList(offer.detailList)
+        binding?.attachList?.isNestedScrollingEnabled = false
+        binding?.attachList?.adapter = adapter*/
+        binding?.cancelBtn?.setOnClickListener {
+            item.cancel()
+        }
+
+        binding?.yesBtn?.setOnClickListener {
+            item.accept()
+        }
+
+        binding?.showDetailsBtn?.setOnClickListener {
+            val builder = AlertDialog.Builder(it.context)
+            val view =   LayoutInflater.from(it.context).inflate(R.layout.dialog_connection_card,null,false)
+            val recyclerView  : RecyclerView = view.findViewById(R.id.detailsRecyclerView)
+            val nameTextView  : TextView = view.findViewById(R.id.connectionUserTextView)
+            val iconView  : ImageView = view.findViewById(R.id.connectionIconView)
+            val typeView  : TextView = view.findViewById(R.id.connectionTypeTextView)
+            val connectionDescriptionTextView  : TextView = view.findViewById(R.id.connectionDescriptionTextView)
+
+          //  var adapter: ConnectionDetailsAdapter? = null
+            val adapter = CredentialsDetailAdapter()
+            adapter.setDataList(offer.detailList)
+         //   binding?.attachList?.isNestedScrollingEnabled = false
+            recyclerView.adapter = adapter
+
+            if(item.name?.contains("driver",true)==true){
+                iconView.setImageResource(R.drawable.ic_driver_license)
+            }else if(item.name?.contains("passport",true)==true){
+                iconView.setImageResource(R.drawable.ic_pass)
+            }else{
+                iconView.setImageResource(R.drawable.documents)
+            }
+
+            nameTextView.text = item.name
+            connectionDescriptionTextView.text = item.hint
+
+
+            builder.setView(view)
+            builder.show()
+        }
+
+        if(item.isLoading){
+            binding?.progressBar?.visibility = View.VISIBLE
+            binding?.buttonsLayout?.visibility =  View.GONE
+        }else{
+            binding?.progressBar?.visibility = View.GONE
+            binding?.buttonsLayout?.visibility =  View.VISIBLE
+        }
+        binding?.statusDate?.text =  DateUtils.getStringFromDate(item.date, DateUtils.PATTERN_ddMMMyyyyBase, false)
     }
 }
 
@@ -70,11 +182,63 @@ class OfferAcceptedMessageViewHolder(itemView: View) : MessageViewHolder(itemVie
         if(item.isError){
             binding?.cardView?.setCardBackgroundColor(App.getContext().getColor(R.color.red))
             binding?.text?.text = App.getContext().resources.getString(R.string.message_credentials_declined)
+            binding?.iconView?.setImageResource(R.drawable.ic_attention)
         }else{
             binding?.cardView?.setCardBackgroundColor(App.getContext().getColor(R.color.blue))
             binding?.text?.text = App.getContext().resources.getString(R.string.message_offer_successfully)
+            binding?.iconView?.setImageResource(R.drawable.ic_check_outline)
         }
+
+
+        if(item.getTitle().contains("driver",true)==true){
+            binding?.iconView?.setImageResource(R.drawable.ic_driver_license)
+        }else if(item.getTitle()?.contains("passport",true)==true){
+            binding?.iconView?.setImageResource(R.drawable.ic_pass)
+        }else{
+            binding?.iconView?.setImageResource(R.drawable.documents)
+        }
+
+        val offer = item as OfferItemMessage
+
         binding?.dateText?.text = DateUtils.getStringFromDate(item.date, DateUtils.PATTERN_DATETIME_DOT, false)
+        var hint = ""
+        if(item is OfferItemMessage ){
+            val offer = item as OfferItemMessage
+            hint = offer.hint ?:""
+        }
+
+        binding?.nameCredText?.text =  offer.name
+
+        binding?.showDetailsBtn?.setOnClickListener {
+            val builder = AlertDialog.Builder(it.context)
+            val view =   LayoutInflater.from(it.context).inflate(R.layout.dialog_connection_card,null,false)
+            val recyclerView  : RecyclerView = view.findViewById(R.id.detailsRecyclerView)
+            val nameTextView  : TextView = view.findViewById(R.id.connectionUserTextView)
+            val iconView  : ImageView = view.findViewById(R.id.connectionIconView)
+            val typeView  : TextView = view.findViewById(R.id.connectionTypeTextView)
+            val connectionDescriptionTextView  : TextView = view.findViewById(R.id.connectionDescriptionTextView)
+
+            //  var adapter: ConnectionDetailsAdapter? = null
+            val adapter = CredentialsDetailAdapter()
+            adapter.setDataList(offer.detailList)
+            //   binding?.attachList?.isNestedScrollingEnabled = false
+            recyclerView.adapter = adapter
+
+            if(item.name?.contains("driver",true)==true){
+                iconView.setImageResource(R.drawable.ic_driver_license)
+            }else if(item.name?.contains("passport",true)==true){
+                iconView.setImageResource(R.drawable.ic_pass)
+            }else{
+                iconView.setImageResource(R.drawable.documents)
+            }
+
+            nameTextView.text = item.name
+            connectionDescriptionTextView.text = item.hint
+
+
+            builder.setView(view)
+            builder.show()
+        }
     }
 }
 
@@ -83,7 +247,7 @@ class ProverMessageViewHolder(itemView: View) : MessageViewHolder(itemView) {
         DataBindingUtil.bind<ItemMessageProverBinding>(itemView)
 
     override fun bind(item: BaseItemMessage) {
-     /*   val prover = item as ProverItemMessage
+        val prover = item as ProverItemMessage
         binding?.item = prover
         val adapter = CredentialsDetailAdapter()
         adapter.setDataList(prover.detailList)
@@ -97,7 +261,40 @@ class ProverMessageViewHolder(itemView: View) : MessageViewHolder(itemView) {
             prover.accept()
         }
 
-        binding?.detailsBtn?.setOnClickListener {
+
+        binding?.showDetailsBtn?.setOnClickListener {
+            val builder = AlertDialog.Builder(it.context)
+            val view =   LayoutInflater.from(it.context).inflate(R.layout.dialog_connection_card,null,false)
+            val recyclerView  : RecyclerView = view.findViewById(R.id.detailsRecyclerView)
+            val nameTextView  : TextView = view.findViewById(R.id.connectionUserTextView)
+            val iconView  : ImageView = view.findViewById(R.id.connectionIconView)
+            val typeView  : TextView = view.findViewById(R.id.connectionTypeTextView)
+            val connectionDescriptionTextView  : TextView = view.findViewById(R.id.connectionDescriptionTextView)
+
+            //  var adapter: ConnectionDetailsAdapter? = null
+            val adapter = CredentialsDetailAdapter()
+            adapter.setDataList(prover.detailList)
+            //   binding?.attachList?.isNestedScrollingEnabled = false
+            recyclerView.adapter = adapter
+
+            if(item.name?.contains("driver",true)==true){
+                iconView.setImageResource(R.drawable.ic_driver_license)
+            }else if(item.name?.contains("passport",true)==true){
+                iconView.setImageResource(R.drawable.ic_pass)
+            }else{
+                iconView.setImageResource(R.drawable.documents)
+            }
+
+            nameTextView.text = item.name
+            connectionDescriptionTextView.text = item.hint
+
+
+            builder.setView(view)
+            builder.show()
+        }
+
+
+     /*   binding?.detailsBtn?.setOnClickListener {
             if( item.detailsVisibilityLiveData.value == View.GONE){
                 item.detailsVisibilityLiveData.postValue(View.VISIBLE)
                 item.notifyItem()
@@ -105,7 +302,7 @@ class ProverMessageViewHolder(itemView: View) : MessageViewHolder(itemView) {
                 item.detailsVisibilityLiveData.postValue(View.GONE)
                 item.notifyItem()
             }
-        }
+        }*/
         if(item.isLoading){
             binding?.progressBar?.visibility = View.VISIBLE
             binding?.buttonsLayout?.visibility =  View.GONE
@@ -113,7 +310,7 @@ class ProverMessageViewHolder(itemView: View) : MessageViewHolder(itemView) {
             binding?.progressBar?.visibility = View.GONE
             binding?.buttonsLayout?.visibility =  View.VISIBLE
         }
-        binding?.statusDate?.text =  DateUtils.getStringFromDate(item.date, DateUtils.PATTERN_ddMMMyyyyBase, false)*/
+        binding?.statusDate?.text =  DateUtils.getStringFromDate(item.date, DateUtils.PATTERN_ddMMMyyyyBase, false)
     }
 }
 
@@ -123,12 +320,53 @@ class ProverAcceptedMessageViewHolder(itemView: View) : MessageViewHolder(itemVi
         if(item.isError){
             binding?.cardView?.setCardBackgroundColor(App.getContext().getColor(R.color.red))
             binding?.text?.text = App.getContext().resources.getString(R.string.message_credentials_request_declined)
+            binding?.iconView?.setImageResource(R.drawable.ic_attention)
         }else{
             binding?.cardView?.setCardBackgroundColor(App.getContext().getColor(R.color.blue))
-            binding?.text?.text = App.getContext().resources.getString(R.string.message_credentials_request_succes)
+            binding?.text?.text = App.getContext().resources.getString(R.string.message_offer_provided)
+            binding?.iconView?.setImageResource(R.drawable.ic_check_outline)
+        }
+        val prover = item as ProverItemMessage
+        binding?.nameCredText?.text = prover.name
+        if(prover.name?.contains("driver",true)==true){
+            binding?.iconView?.setImageResource(R.drawable.ic_driver_license)
+        }else if(prover.name?.contains("passport",true)==true){
+            binding?.iconView?.setImageResource(R.drawable.ic_pass)
+        }else{
+            binding?.iconView?.setImageResource(R.drawable.documents)
+        }
+        binding?.dateText?.text = DateUtils.getStringFromDate(item.date, DateUtils.PATTERN_DATETIME_DOT, false)
+        binding?.showDetailsBtn?.setOnClickListener {
+            val builder = AlertDialog.Builder(it.context)
+            val view =   LayoutInflater.from(it.context).inflate(R.layout.dialog_connection_card,null,false)
+            val recyclerView  : RecyclerView = view.findViewById(R.id.detailsRecyclerView)
+            val nameTextView  : TextView = view.findViewById(R.id.connectionUserTextView)
+            val iconView  : ImageView = view.findViewById(R.id.connectionIconView)
+            val typeView  : TextView = view.findViewById(R.id.connectionTypeTextView)
+            val connectionDescriptionTextView  : TextView = view.findViewById(R.id.connectionDescriptionTextView)
+
+            //  var adapter: ConnectionDetailsAdapter? = null
+            val adapter = CredentialsDetailAdapter()
+            adapter.setDataList(prover.detailList)
+            //   binding?.attachList?.isNestedScrollingEnabled = false
+            recyclerView.adapter = adapter
+
+            if(item.name?.contains("driver",true)==true){
+                iconView.setImageResource(R.drawable.ic_driver_license)
+            }else if(item.name?.contains("passport",true)==true){
+                iconView.setImageResource(R.drawable.ic_pass)
+            }else{
+                iconView.setImageResource(R.drawable.documents)
+            }
+
+            nameTextView.text = item.name
+            connectionDescriptionTextView.text = item.hint
+
+
+            builder.setView(view)
+            builder.show()
         }
 
-        binding?.dateText?.text = DateUtils.getStringFromDate(item.date, DateUtils.PATTERN_DATETIME_DOT, false)
     }
 }
 
@@ -146,6 +384,8 @@ class ConnectMessageViewHolder(itemView: View) : MessageViewHolder(itemView) {
         binding?.yesBtn?.setOnClickListener {
             item.accept()
         }
+
+        binding?.nameTextView?.text = item.getTitle()
         if(item.isLoading){
             binding?.progressBar?.visibility = View.VISIBLE
             binding?.buttonsLayout?.visibility =  View.GONE
@@ -153,22 +393,29 @@ class ConnectMessageViewHolder(itemView: View) : MessageViewHolder(itemView) {
             binding?.progressBar?.visibility = View.GONE
             binding?.buttonsLayout?.visibility =  View.VISIBLE
         }
+        val connectItem = item as ConnectItemMessage
+        binding?.nameTextView?.text = connectItem.name
+       // binding?.nameCredText?.text = connectItem?.name
     }
 }
 
 class ConnectedMessageViewHolder(itemView: View) : MessageViewHolder(itemView) {
      var binding: ItemMessageConnectAcceptedBinding? = DataBindingUtil.bind<ItemMessageConnectAcceptedBinding>(itemView)
     override fun bind(item: BaseItemMessage) {
+        val connectItem = item as ConnectItemMessage
         if(item.isError){
             binding?.cardView?.setCardBackgroundColor(App.getContext().getColor(R.color.red))
             binding?.text?.text = App.getContext().resources.getString(R.string.message_connected_error)
+            binding?.iconView?.setImageResource(R.drawable.ic_attention)
            // item.errorString
         }else{
             binding?.cardView?.setCardBackgroundColor(App.getContext().getColor(R.color.blue))
             binding?.text?.text = App.getContext().resources.getString(R.string.message_connected_successfully)
+            binding?.iconView?.setImageResource(R.drawable.ic_check_outline)
 
         }
         binding?.dateText?.text = DateUtils.getStringFromDate(item.date, DateUtils.PATTERN_DATETIME_DOT, false)
+        binding?.nameCredText?.text = connectItem?.name
     }
 }
 

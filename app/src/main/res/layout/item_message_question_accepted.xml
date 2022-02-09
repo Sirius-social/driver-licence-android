@@ -25,6 +25,8 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
+                    android:id="@+id/iconView"
+                    android:src="@drawable/ic_check_outline"
                     android:layout_marginRight="16dp"
                     app:tint="@color/white"
                      />

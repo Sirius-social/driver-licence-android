@@ -8,6 +8,9 @@ import com.sirius.driverlicense.R
 import com.sirius.driverlicense.base.App
 import com.sirius.driverlicense.base.ui.BaseActivity
 import com.sirius.driverlicense.databinding.ActivityMainBinding
+import com.sirius.driverlicense.ui.chats.chats.ChatsFragment
+import com.sirius.driverlicense.ui.main.MainPoliceFragment
+import com.sirius.driverlicense.ui.profile.MenuProfileFragment
 
 
 class MainActivityPolice : BaseActivity<ActivityMainBinding, MainActivityModelPolice>() {
@@ -40,10 +43,8 @@ class MainActivityPolice : BaseActivity<ActivityMainBinding, MainActivityModelPo
 
     override fun subscribe() {
         super.subscribe()
+        showPage(MainPoliceFragment())
 
-      /*  model.selectedTab.observe(this, Observer {
-            dataBinding.navigationBottom.selectedTabLiveData.value = it
-        })
 
         model.invitationStartLiveData.observe(this, Observer {
             // pushPage(ValidatingFragment())
@@ -52,14 +53,15 @@ class MainActivityPolice : BaseActivity<ActivityMainBinding, MainActivityModelPo
         })
 
         model.invitationErrorLiveData.observe(this, Observer {
-            pushPage(ErrorFragment.newInstance(it.second))
+            //   pushPage(ErrorFragment.newInstance(it.second))
+            model.onShowToastLiveData.postValue(it.second)
         })
 
         model.invitationSuccessLiveData.observe(this, Observer {
             val item = model.getMessage(it)
-            showPage(MenuFragment())
+            //  showPage(MenuFragment())
             pushPage(ChatsFragment.newInstance(item))
-        })*/
+        })
     }
 
 

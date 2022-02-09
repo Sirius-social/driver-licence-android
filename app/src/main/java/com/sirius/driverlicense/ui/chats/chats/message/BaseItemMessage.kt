@@ -113,6 +113,8 @@ abstract class BaseItemMessage {
         Question,
         QuestionAccepted,
         QuestionError,
+        ProposeCredential,
+        ProposeCredentialAccepted
     }
 
     abstract fun getType() : MessageType

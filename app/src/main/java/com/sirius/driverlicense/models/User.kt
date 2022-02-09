@@ -7,6 +7,7 @@ class User {
     var phone : String? =null
     var email : String? =null
     var pass : String? =null
+    var image : String? =null
 
 
 }

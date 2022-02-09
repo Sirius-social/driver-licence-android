@@ -22,4 +22,5 @@ class ItemContacts : Serializable{
     var date: Date? = null
     var isActionExist: Boolean = false
 
+
 }

@@ -7,6 +7,7 @@ import com.sirius.driverlicense.repository.models.LocalMessage
 import com.sirius.library.agent.aries_rfc.feature_0036_issue_credential.messages.ProposedAttrib
 import com.sirius.library.agent.aries_rfc.feature_0037_present_proof.messages.RequestPresentationMessage
 import com.sirius.library.agent.listener.Event
+import com.sirius.library.mobile.SiriusSDK
 import com.sirius.library.mobile.helpers.ScenarioHelper
 import com.sirius.library.mobile.scenario.EventAction
 import com.sirius.library.mobile.scenario.EventActionListener
@@ -47,28 +48,30 @@ class ProverItemMessage : BaseItemMessage {
         val message = JSONObject(requestPresentationMessage?.serialize())
         val attches = message.optJSONArray("~attach")
         val list = mutableListOf<ProposedAttrib>()
-        for (i in 0 until attches.length()) {
 
-            val attachObject = attches.getJSONObject(i)
-            val type = attachObject.optString("@type")
+        if(attches!=null){
+            for (i in 0 until attches.length()) {
 
-            if (type.contains("credential-translation")) {
-                val langObject = attachObject.optJSONObject("~l10n")
-                val dataObj = attachObject.optJSONObject("data")
-                val dataJson = dataObj.optJSONArray("json")
-                for (z in 0 until dataJson.length()) {
-                    val attrObj = dataJson.getJSONObject(z)
-                    val attrName = attrObj.optString("attrib_name")
-                    val translation = attrObj.optString("translation")
-                    list.add(ProposedAttrib(attrName, translation))
+                val attachObject = attches.getJSONObject(i)
+                val type = attachObject.optString("@type")
+
+                if (type.contains("credential-translation")) {
+                    val langObject = attachObject.optJSONObject("~l10n")
+                    val dataObj = attachObject.optJSONObject("data")
+                    val dataJson = dataObj.optJSONArray("json")
+                    for (z in 0 until dataJson.length()) {
+                        val attrObj = dataJson.getJSONObject(z)
+                        val attrName = attrObj.optString("attrib_name")
+                        val translation = attrObj.optString("translation")
+                        list.add(ProposedAttrib(attrName, translation))
+                    }
                 }
             }
         }
-
         hint = requestPresentationMessage?.comment
         val reqObject = JSONObject(proofRequest)
         name = reqObject.optString("name")
-        val names = mutableListOf<String>()
+        val names = mutableMapOf<String, Boolean>()
         val reqAttr = reqObject.optJSONObject("requested_attributes")
         val iteraror = reqAttr.keys()
         while (iteraror.hasNext()) {
@@ -80,19 +83,65 @@ class ProverItemMessage : BaseItemMessage {
                 list.forEach {
                     if (it.name == name) {
                         if (it.value?.isNotEmpty()==true) {
-                            names.add(it.value?:"")
+                            names.put(it.value?:"", false)
                             existTranslation = true
                         }
                     }
                 }
                 if (!existTranslation) {
-                    names.add(name)
+                    names.put(name, false)
                 }
             }
         }
 
+        try{
+            val string2 = SiriusSDK.getInstance().context.anonCreds.
+            proverSearchCredentialsForProofReq(requestPresentationMessage?.proofRequest(), limitReferents = 1)
+
+
+            val objecte1 =  com.sirius.library.utils.JSONObject(string2)
+            val objecte = objecte1.optJSONObject("requested_attributes")
+            objecte?.let {
+                for (objectsd in objecte.keySet()){
+                    val array =  objecte.optJSONArray(objectsd)
+                    val credInfo = array?.optJSONObject(0)?.optJSONObject("cred_info")?.optJSONObject("attrs")
+                    credInfo?.let {
+                        for (credKey in  credInfo.keySet()){
+                            if(names.contains(credKey)){
+                                names.put(credKey, true)
+                            }
+                        }
+                    }
+                }
+            }
+
+        }catch (e :Exception ){
+            e.printStackTrace()
+        }
+
+
         detailList = names?.map {
-            ItemCredentialsDetails(it, "")
+            var name  =it.key
+            if(name == "first_name"){
+                name = "First Name"
+            }
+            if(name == "last_name"){
+                name = "Last Name"
+            }
+            if(name == "categories"){
+                name = "Categories"
+            }
+            if(name == "birthday"){
+                name = "Birthday"
+            }
+            if(name == "place_of_birth"){
+                name = "Place of birth"
+            }
+            var value = "not available"
+            if(it.value){
+                 value = "available"
+            }
+            ItemCredentialsDetails(name, value,"")
         }
     }
 

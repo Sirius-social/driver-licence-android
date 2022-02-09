@@ -70,6 +70,25 @@ open class AuthFirstViewModel @Inject constructor(
 
     }
 
+    fun setUserPassword(pass: String) {
+        if(isPolice){
+            userRepository.myUserPolice.pass = pass
+        }else{
+            userRepository.myUser.pass = pass
+        }
+
+    }
+
+    fun setUserUid(uid: String) {
+        if(isPolice){
+            userRepository.myUserPolice.uid = uid
+        }else{
+            userRepository.myUser.uid = uid
+        }
+
+
+    }
+
     fun getUserName() : String?{
         if(isPolice){
             return userRepository.myUserPolice?.name

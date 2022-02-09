@@ -52,6 +52,12 @@ open class MessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
                 if (type == BaseItemMessage.MessageType.QuestionError.ordinal) {
                     return QuestionAcceptedMessageViewHolder(itemView)
                 }
+                if (type == BaseItemMessage.MessageType.ProposeCredential.ordinal) {
+                    return ProposeCredentialMessageViewHolder(itemView)
+                }
+                if (type == BaseItemMessage.MessageType.ProposeCredentialAccepted.ordinal) {
+                    return ProposeCredentialAcceptedMessageViewHolder(itemView)
+                }
                 return MessageViewHolder(itemView)
             }
 
@@ -97,6 +103,14 @@ open class MessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
                 }
                 if (type == BaseItemMessage.MessageType.QuestionError.ordinal) {
                     return R.layout.item_message_question_accepted
+                }
+
+                if (type == BaseItemMessage.MessageType.ProposeCredential.ordinal) {
+                    return R.layout.item_message_propose
+                }
+
+                if (type == BaseItemMessage.MessageType.ProposeCredentialAccepted.ordinal) {
+                    return R.layout.item_message_propose_accepted
                 }
                 
                 return R.layout.item_message_text

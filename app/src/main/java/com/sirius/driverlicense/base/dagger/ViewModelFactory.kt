@@ -19,6 +19,12 @@ import com.sirius.driverlicense.ui.auth.auth_third_identity.AuthThirdIdentityVie
 import com.sirius.driverlicense.ui.auth.auth_third_third.AuthThirdThirdViewModel
 import com.sirius.driverlicense.ui.auth.auth_zero.AuthZeroViewModel
 import com.sirius.driverlicense.ui.chats.AllChatsViewModel
+import com.sirius.driverlicense.ui.chats.chats.ChatsViewModel
+import com.sirius.driverlicense.ui.connections.ConnectionCardViewModel
+import com.sirius.driverlicense.ui.connections.ConnectionRequestDetailViewModel
+import com.sirius.driverlicense.ui.contacts.ContactsViewModel
+import com.sirius.driverlicense.ui.inviteUser.InviteUserFragment
+import com.sirius.driverlicense.ui.inviteUser.InviteUserViewModel
 import com.sirius.driverlicense.ui.main.MainDriverViewModel
 import com.sirius.driverlicense.ui.main.MainPoliceViewModel
 import com.sirius.driverlicense.ui.profile.MenuProfileViewModel
@@ -191,6 +197,35 @@ abstract class ViewModelModule {
     @ViewModelKey(AllChatsViewModel::class)
     internal abstract fun bindAllChatsViewModel(viewModel: AllChatsViewModel): ViewModel
 
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ContactsViewModel::class)
+    internal abstract fun bindContactsViewModel(viewModel: ContactsViewModel): ViewModel
+
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ChatsViewModel::class)
+    internal abstract fun bindChatsViewModel(viewModel: ChatsViewModel): ViewModel
+
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ConnectionCardViewModel::class)
+    internal abstract fun bindConnectionCardViewModel(viewModel: ConnectionCardViewModel): ViewModel
+
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ConnectionRequestDetailViewModel::class)
+    internal abstract fun bindConnectionRequestDetailViewModel(viewModel: ConnectionRequestDetailViewModel): ViewModel
+
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(InviteUserViewModel::class)
+    internal abstract fun bindInviteUserViewModel(viewModel: InviteUserViewModel): ViewModel
 
 
 

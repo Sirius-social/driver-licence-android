@@ -10,6 +10,8 @@ import com.sirius.driverlicense.R
 import com.sirius.driverlicense.base.providers.ResourcesProvider
 import com.sirius.driverlicense.base.ui.BaseViewModel
 import com.sirius.driverlicense.models.Chats
+import com.sirius.library.mobile.helpers.ChanelHelper
+import com.sirius.library.mobile.helpers.InvitationHelper
 
 import org.json.JSONArray
 import org.json.JSONException
@@ -27,28 +29,21 @@ open class MenuScanQrViewModel @Inject constructor(
         super.onViewCreated()
     }
 
-    open fun onCodeScanned(code: String) : Boolean {
-        if (validateInvitationUrl(code)) {
-            parseInvitationLink(code)
+    open fun onCodeScanned(result: String) : Boolean {
+        val message = InvitationHelper.getInstance().parseInvitationLink(result)
+        if (message != null) {
+            ChanelHelper.getInstance().parseMessage(message)
             return true
         } else {
-            val textError: String = resourcesProvider.getString(R.string.invite_qr_scan_hint_error)
+            val textError: String ="The scanned QR code is not an invitation, please scan another QR code."
             onShowToastLiveData.postValue(textError)
             return false
         }
-    }
-
-
-
-
-    private fun parseInvitationLink(rawValue: String)  {
 
     }
 
 
-    private fun validateInvitationUrl(rawValue: String): Boolean {
-            return false
-    }
+
 
 
 }

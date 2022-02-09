@@ -12,6 +12,7 @@ import com.sirius.driverlicense.base.App
 import com.sirius.driverlicense.base.ui.BaseFragment
 import com.sirius.driverlicense.databinding.FragmentAuthFirstBinding
 import com.sirius.driverlicense.ui.activities.auth.AuthActivity
+import com.sirius.driverlicense.ui.activities.loader.LoaderActivity
 
 
 import com.sirius.driverlicense.ui.auth.auth_second.AuthSecondFragment
@@ -73,9 +74,11 @@ class AuthFirstFragment : BaseFragment<FragmentAuthFirstBinding, AuthFirstViewMo
 
         model.goToNextScreenLiveData.observe(this, Observer {
             if (it) {
-                model.saveUser()
                 model.goToNextScreenLiveData.value = false
-                baseActivity.showPage(AuthSecondSecondFragment())
+                model.setUserUid("test_user")
+                model.setUserPassword("test_password")
+                model.saveUser()
+                LoaderActivity.newInstance(baseActivity, model.isPolice)
             }
         })
     }

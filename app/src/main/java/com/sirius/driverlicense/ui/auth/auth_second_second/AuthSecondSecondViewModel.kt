@@ -41,7 +41,12 @@ open class AuthSecondSecondViewModel @Inject constructor(
     override fun setupViews() {
         super.setupViews()
         isNextEnabled()
-        labelTextLiveData.postValue(resourceProvider.getString(R.string.auth_second_title,userRepository.myUser.name ?: ""))
+        if(isPolice){
+            labelTextLiveData.postValue(resourceProvider.getString(R.string.auth_second_title,userRepository.myUserPolice.name ?: ""))
+        }else{
+            labelTextLiveData.postValue(resourceProvider.getString(R.string.auth_second_title,userRepository.myUser.name ?: ""))
+        }
+
     }
 
 

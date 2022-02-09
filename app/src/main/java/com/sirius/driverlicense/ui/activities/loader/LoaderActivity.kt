@@ -43,6 +43,7 @@ class LoaderActivity : BaseActivity<ActivityLoaderBinding, LoaderActivityModel>(
     }
 
 
+
     override fun subscribe() {
         super.subscribe()
         model.initEndLiveData.observe(this, Observer {
@@ -53,12 +54,22 @@ class LoaderActivity : BaseActivity<ActivityLoaderBinding, LoaderActivityModel>(
                 MainActivity.newInstance(this)
             }
         })
+        if(model.isPolice){
+            dataBinding.logo.setImageResource(R.drawable.ic_police)
+        }else{
+            dataBinding.logo.setImageResource(R.drawable.ic_license)
+        }
+    }
+
+    override fun setupViews() {
+        super.setupViews()
+        val isPolice = intent?.getBooleanExtra("isPolice", false) ?: false
+        model.isPolice = isPolice
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val isPolice = intent?.getBooleanExtra("isPolice", false) ?: false
-        model.isPolice = isPolice
-        model.initSdk(this,isPolice)
+
+        model.initSdk(this, model.isPolice)
     }
 
 

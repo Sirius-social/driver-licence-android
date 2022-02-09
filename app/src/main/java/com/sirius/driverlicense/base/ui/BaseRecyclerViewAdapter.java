@@ -27,11 +27,20 @@ public abstract class BaseRecyclerViewAdapter<T, H extends RecyclerView.ViewHold
         return onAdapterItemClick;
     }
 
+    public OnAdapterViewClick<T> getOnAdapterViewClick() {
+        return onAdapterViewClick;
+    }
+
+    public void setOnAdapterViewClick(OnAdapterViewClick<T> onAdapterItemClick) {
+        this.onAdapterViewClick = onAdapterItemClick;
+    }
+
     public void setOnAdapterItemClick(OnAdapterItemClick<T> onAdapterItemClick) {
         this.onAdapterItemClick = onAdapterItemClick;
     }
 
     OnAdapterItemClick<T> onAdapterItemClick;
+    OnAdapterViewClick<T> onAdapterViewClick;
 
 
     protected BaseRecyclerViewAdapter() {

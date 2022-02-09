@@ -33,7 +33,7 @@ class MenuScanQrFragment : BaseFragment<FragmentMenuScanQrBinding, MenuScanQrVie
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (PermissionHelper.checkPermissionsOnlyForCamera(activity, 1098)) {
+        if (PermissionHelper.checkPermissionsForCamera(activity, 1098)) {
             startCamera()
         }
 

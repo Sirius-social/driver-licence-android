@@ -3,6 +3,7 @@ package com.sirius.driverlicense.base
 import android.content.Context
 import android.content.SharedPreferences
 import android.text.TextUtils
+import android.util.Log
 import com.google.gson.Gson
 import com.sirius.driverlicense.base.providers.Encryption
 import com.sirius.driverlicense.models.User
@@ -103,6 +104,9 @@ class AppPref {
         return getEncryptionDefault().decryptOrNull(string)
     }
 
+    fun cleanAll() {
+        prefs.edit().clear().apply()
+    }
 
   fun setUser(user: User?) {
         val userKey = getEncryptionDefault().encryptOrNull("user") ?: ""
@@ -131,6 +135,9 @@ class AppPref {
 
     fun isLoggedIn(): Boolean {
         val isLoggedIn = getUser()?.uid != null
+        Log.d("mylog2090","getUser()?.uid="+getUser()?.uid)
+        Log.d("mylog2090","getUser()?.name="+getUser()?.name)
+        Log.d("mylog2090","getUser()?.pass="+getUser()?.pass)
         return isLoggedIn
     }
 
@@ -161,7 +168,7 @@ class AppPref {
 
 
     fun isPoliceLoggedIn(): Boolean {
-        val isLoggedIn = getUser()?.uid != null
+        val isLoggedIn = getPoliceUser()?.uid != null
         return isLoggedIn
     }
 

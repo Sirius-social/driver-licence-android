@@ -69,6 +69,7 @@ public abstract class BaseActivity<VB extends ViewDataBinding, M extends BaseAct
         }
         initDagger();
         initViewModel();
+        setupViews();
         subscribe();
     }
 
@@ -308,5 +309,9 @@ public abstract class BaseActivity<VB extends ViewDataBinding, M extends BaseAct
     public void onResume() {
         super.onResume();
         model.onResume();
+    }
+
+    public void setupViews(){
+
     }
 }

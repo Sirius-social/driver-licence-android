@@ -16,7 +16,7 @@
                 android:id="@+id/mainFrame"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_above="@+id/navigationBottom"
+
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="0dp"
                 android:layout_marginBottom="0dp"
@@ -24,7 +24,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.bottomnavigation.BottomNavigationView
+      <!--      <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/navigationBottom"
                 android:layout_width="match_parent"
                 android:layout_alignParentBottom="true"
@@ -34,7 +34,7 @@
                 app:itemTextColor="@color/selector_navigation_icon_light"
                 app:itemIconTint="@color/selector_navigation_icon_light"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:menu="@menu/bottom_nav_menu" />
+                app:menu="@menu/bottom_nav_menu" />-->
 
        <!--     <com.sirius.driverlicense.design.BottomNavView
                 android:id="@+id/navigationBottom"

@@ -14,6 +14,7 @@ import com.sirius.driverlicense.repository.EventRepository
 import com.sirius.driverlicense.repository.MessageRepository
 import com.sirius.driverlicense.repository.models.LocalMessage
 import com.sirius.driverlicense.ui.chats.chats.message.*
+import com.sirius.library.agent.aries_rfc.feature_0036_issue_credential.messages.ProposeCredentialMessage
 
 
 import java.util.*
@@ -61,6 +62,10 @@ class LocalMessageTransform {
             }
             if (message is QuestionMessage) {
                 return QuestionItemMessage(localMessage)
+            }
+
+            if (message is ProposeCredentialMessage) {
+                return ProposeCredentialItemMessage(localMessage)
             }
 
             if (message is Message) {

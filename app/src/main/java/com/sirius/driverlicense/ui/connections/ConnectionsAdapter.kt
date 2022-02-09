@@ -4,83 +4,107 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 
 import com.sirius.driverlicense.R
+import com.sirius.driverlicense.base.ui.SimpleBaseRecyclerViewAdapter
+import com.sirius.driverlicense.databinding.ViewItemsCredentialsBinding
+import com.sirius.driverlicense.models.ui.ItemCredentials
+import com.sirius.driverlicense.ui.credentials.CredentialsDetailAdapter
 
 
 private const val CONNECTION_ITEM = 1
 private const val TITLE_ITEM = 2
 
-class ConnectionsAdapter(private val onConnectionClick: (ConnectionItem) -> Unit) : Adapter<ViewHolder>() {
 
-    private val items: MutableList<Any> = mutableListOf()
+class ConnectionsAdapter(private val onConnectionClick: (ItemCredentials) -> Unit) :
+    SimpleBaseRecyclerViewAdapter<ItemCredentials, ConnectionsAdapter.ConnectionsViewHolder>() {
 
-    fun setItems(items: List<Any>) {
-        this.items.clear()
-        this.items.addAll(items)
-        notifyDataSetChanged()
+
+ /*   override fun onBind(holder: CredentialsViewHolder?, position: Int) {
+        val item = getItem(position)
+        holder?.bind(item)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return if (viewType == TITLE_ITEM) {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_connection_title, parent, false)
-            ConnectionsTitleViewHolder(view)
-        } else {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_connection, parent, false)
-            ConnectionsViewHolder(view)
+
+    class CredentialsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var binding: ViewItemsCredentialsBinding? = DataBindingUtil.bind<ViewItemsCredentialsBinding>(itemView)
+        fun bind(item: ItemCredentials) {
+            binding?.item = item
+            val adapter = CredentialsDetailAdapter()
+            adapter.setDataList(item.detailList)
+            binding?.detailsList?.isNestedScrollingEnabled = false
+            binding?.detailsList?.adapter = adapter
         }
     }
 
-    override fun getItemCount(): Int {
-        return items.size
+    override fun getLayoutRes(): Int {
+        return R.layout.view_items_credentials
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        when (holder) {
-            is ConnectionsTitleViewHolder -> holder.bind(items[position] as String)
-            is ConnectionsViewHolder      -> holder.bind(items[position] as ConnectionItem)
-        }
+    override fun getViewHolder(
+        parent: ViewGroup?,
+        layoutRes: Int,
+        viewType: Int
+    ): CredentialsViewHolder {
+        val view =
+            LayoutInflater.from(parent?.context).inflate(getLayoutRes(), parent, false)
+        return CredentialsViewHolder(view)
     }
-
-    override fun getItemViewType(position: Int): Int {
-        return when (items[position]) {
-            is ConnectionItem -> CONNECTION_ITEM
-            is String         -> TITLE_ITEM
-            else              -> 0
-        }
-    }
-
+*/
     inner class ConnectionsViewHolder(itemView: View) : ViewHolder(itemView) {
 
-      /*  override val containerView: View?
-            get() = itemView
+        val  bottomTextView : TextView = itemView.findViewById(R.id.bottomTextView)
+        val  iconView : ImageView = itemView.findViewById(R.id.iconView)
+        val  shareView : ImageView = itemView.findViewById(R.id.shareView)
+        /*  override val containerView: View?
+              get() = itemView
 
 
-       */
-        fun bind(connectionItem: ConnectionItem) {
-         /*
-            itemView.topTextView.text = connectionItem.type
-            itemView.bottomTextView.text = connectionItem.name
-            itemView.attributesTextView.text = connectionItem.attrsCount
-            itemView.iconView.setImageResource(connectionItem.icon)
-            itemView.iconView.backgroundTintList = App.getContext().resources.getColorStateList(connectionItem.color)
-            itemView.setOnClickListener {
-                onConnectionClick(connectionItem)
+         */
+        fun bind(connectionItem: ItemCredentials) {
+
+            //   itemView.topTextView.text = connectionItem.type
+            bottomTextView.text = connectionItem.title
+            if(connectionItem.title?.contains("driver",true)==true){
+                iconView.setImageResource(R.drawable.ic_driver_license)
+            }else if(connectionItem.title?.contains("passport",true)==true){
+                iconView.setImageResource(R.drawable.ic_pass)
+            }else{
+                iconView.setImageResource(R.drawable.documents)
             }
 
-       */
+            shareView.setOnClickListener {
+                onAdapterViewClick.onItemClick(connectionItem, it.id)
+            }
+
+            itemView.setOnClickListener {
+                onAdapterItemClick?.onItemClick(connectionItem)
+            }
         }
     }
 
-    inner class ConnectionsTitleViewHolder(itemView: View) : ViewHolder(itemView) {
-
-       /* override val containerView: View?
-            get() = itemView
-*/
-        fun bind(title: String) {
-           // itemView.titleTextView.text = title
-        }
+    override fun getLayoutRes(): Int {
+       return R.layout.item_connection
     }
+
+    override fun getViewHolder(
+        parent: ViewGroup?,
+        layoutRes: Int,
+        viewType: Int
+    ): ConnectionsViewHolder {
+        val view = LayoutInflater.from(parent?.context).inflate(getLayoutRes(), parent, false)
+        return ConnectionsViewHolder(view)
+    }
+
+    override fun onBind(holder: ConnectionsViewHolder?, position: Int) {
+        val item = getItem(position)
+        holder?.bind(item)
+    }
+
 }

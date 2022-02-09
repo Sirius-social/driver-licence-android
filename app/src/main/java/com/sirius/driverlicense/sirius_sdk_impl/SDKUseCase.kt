@@ -23,8 +23,17 @@ import com.sirius.library.mobile.utils.HashUtils
 
 import com.sirius.driverlicense.repository.EventRepository
 import com.sirius.driverlicense.repository.MessageRepository
+import com.sirius.driverlicense.repository.UserRepository
 import com.sirius.driverlicense.repository.models.LocalMessage
 import com.sirius.driverlicense.sirius_sdk_impl.scenario.*
+import com.sirius.driverlicense.utils.FileUtils
+import com.sirius.library.agent.aries_rfc.feature_0036_issue_credential.messages.OfferCredentialMessage
+import com.sirius.library.agent.aries_rfc.feature_0036_issue_credential.messages.ProposeCredentialMessage
+import com.sirius.library.mobile.models.CredentialsRecord
+import com.sodium.LibSodium
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -40,7 +49,8 @@ import javax.inject.Singleton
 @Singleton
 class SDKUseCase @Inject constructor(
     private val eventRepository: EventRepository,
-    private val messageRepository: MessageRepository) {
+    private val messageRepository: MessageRepository,val userRepository: UserRepository
+) {
 
 
     public fun startSocketService(context: Context) {
@@ -132,42 +142,40 @@ class SDKUseCase @Inject constructor(
         }
         val mediatorAddress = "wss://mediator.socialsirius.com/ws"
         val recipientKeys = "DjgWN49cXQ6M6JayBkRCwFsywNhomn8gdAXHJ4bb98im"
-        Thread(Runnable {
-            SiriusSDK.getInstance().initialize(
-                alias = walletId, pass = passForWallet,
-                mainDirPath = mainDirPath,
-                mediatorAddress = mediatorAddress,recipientKeys = listOf(recipientKeys),
-                label = label, baseSender = sender
-            )
-            ChanelHelper.getInstance().initListener()
-            SiriusSDK.getInstance().connectToMediator(null)
-            initScenario()
-            onInitListener?.initEnd()
-        }).start()
 
-   /*     FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+
+
+      FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
                 //  Log.w(TAG, "Fetching FCM registration token failed", task.exception)
                 return@OnCompleteListener
             }
             val token = task.result
-            Thread(Runnable {
-                SiriusSDK.getInstance().initialize(
-                    alias = walletId, pass = passForWallet,
-                    mainDirPath = mainDirPath,
-                    mediatorAddress = mediatorAddress,recipientKeys = listOf(recipientKeys),
-                    label = label, baseSender = sender
-                )
-                ChanelHelper.getInstance().initListener()
-                SiriusSDK.getInstance().connectToMediator(token)
-                initScenario()
-                onInitListener?.initEnd()
-            }).start()
-        })*/
+          GlobalScope.launch(Dispatchers.Default) {
+
+              SiriusSDK.getInstance().initializeCorouitine(
+                  alias = walletId, pass = passForWallet,
+                  mainDirPath = mainDirPath,
+                  mediatorAddress = mediatorAddress,recipientKeys = listOf(recipientKeys),
+                  label = label,"default_mobile", baseSender = sender
+              )
+              ChanelHelper.getInstance().initListener()
+              SiriusSDK.getInstance().connectToMediator(token)
+              initScenario()
+              onInitListener?.initEnd()
+          }
+        })
 
 
     }
 
+    fun deleteWallet(context: Context){
+        userRepository.logout()
+        val mainDirPath = context.filesDir.absolutePath
+        val walletDirPath = mainDirPath + File.separator + "wallet"
+        FileUtils.cleanDirectory(File(walletDirPath))
+        FileUtils.deleteDirectory(File(walletDirPath))
+    }
 
     private fun initScenario() {
         ScenarioHelper.getInstance().addScenario("Inviter",InviterScenarioImpl(messageRepository))
@@ -194,6 +202,36 @@ class SDKUseCase @Inject constructor(
         return localMessage
     }
 
+    fun sendRequestToPairwise(pairwiseDid: String): LocalMessage{
+        val pairwise = PairwiseHelper.getInstance().getPairwise(theirDid = pairwiseDid)
+        val proposMessage = ProposeCredentialMessage.builder().setCredDefId("4565").setSchemaId("465").build()
+        //  val message = Message.builder().setContent(messageText).build()
+        val localMessage = LocalMessage(pairwiseDid = pairwiseDid)
+        localMessage.isMine = true
+        localMessage.type = "propose"
+        localMessage.message = proposMessage.serialize()
+        localMessage.sentTime = Date()
+        pairwise?.let {
+            SiriusSDK.getInstance().context.sendTo(proposMessage, pairwise)
+        }
+        return localMessage
+    }
+
+    fun sendRequestToPairwise(pairwiseDid: String, credentialsRecord: CredentialsRecord): LocalMessage{
+        val pairwise = PairwiseHelper.getInstance().getPairwise(theirDid = pairwiseDid)
+        val proposMessage = ProposeCredentialMessage.builder().setCredDefId(credentialsRecord.cred_def_id).
+        setCredentialProposal(credentialsRecord.getAttributes()).setSchemaId(credentialsRecord.schema_id).build()
+      //  val message = Message.builder().setContent(messageText).build()
+        val localMessage = LocalMessage(pairwiseDid = pairwiseDid)
+        localMessage.isMine = true
+        localMessage.type = "text"
+        localMessage.message = proposMessage.serialize()
+        localMessage.sentTime = Date()
+        pairwise?.let {
+            SiriusSDK.getInstance().context.sendTo(proposMessage, pairwise)
+        }
+        return localMessage
+    }
 
     fun generateInvitation() : String?{
         val inviter = ScenarioHelper.getInstance().getScenarioBy("Inviter") as? InviterScenario

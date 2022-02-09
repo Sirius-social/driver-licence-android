@@ -23,6 +23,7 @@ class LoaderActivityModel @Inject constructor(
     val initEndLiveData = MutableLiveData<Boolean>()
 
         fun initSdk(context: Context, isPolice : Boolean){
+            userRepository.setupUserFromPref()
             var login =  ""
             var pass = ""
             var label = ""

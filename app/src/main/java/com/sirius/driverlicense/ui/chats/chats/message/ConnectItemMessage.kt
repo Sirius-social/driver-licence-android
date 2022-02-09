@@ -2,6 +2,8 @@ package com.sirius.driverlicense.ui.chats.chats.message
 
 
 import com.sirius.driverlicense.repository.models.LocalMessage
+import com.sirius.library.agent.aries_rfc.feature_0160_connection_protocol.messages.ConnRequest
+import com.sirius.library.agent.aries_rfc.feature_0160_connection_protocol.messages.Invitation
 import com.sirius.library.agent.listener.Event
 import com.sirius.library.mobile.helpers.ScenarioHelper
 import com.sirius.library.mobile.scenario.EventAction
@@ -11,8 +13,19 @@ import com.sirius.library.mobile.scenario.EventActionListener
 
 class ConnectItemMessage : BaseItemMessage {
 
+    var name = ""
     constructor(event: Event?) : super(event)
-    constructor(localMessage: LocalMessage?) : super(localMessage)
+    constructor(localMessage: LocalMessage?) : super(localMessage) {
+        val message = localMessage?.message()
+        if(message is Invitation){
+           val invit =  message as? Invitation
+            name = invit?.label()?:""
+        }else if(message is ConnRequest){
+            val connRequest =  message as? Invitation
+            name = connRequest?.label()?:""
+        }
+
+    }
 
     override fun getType(): MessageType {
         if (isError) {
@@ -93,6 +106,6 @@ class ConnectItemMessage : BaseItemMessage {
     }
 
     override fun getTitle(): String {
-        return "Connect?"
+        return name
     }
 }

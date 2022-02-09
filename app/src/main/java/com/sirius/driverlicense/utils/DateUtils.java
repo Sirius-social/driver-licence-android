@@ -3,7 +3,8 @@ package com.sirius.driverlicense.utils;
 import android.annotation.SuppressLint;
 
 
-
+import com.sirius.driverlicense.R;
+import com.sirius.driverlicense.base.App;
 
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
@@ -368,7 +369,7 @@ public class DateUtils {
         return formattedDate;
     }
 
-/*    public static String dateToDateDividerType(Date date) {
+    public static String dateToDateDividerType(Date date) {
         String formattedDate = "";
         if (date == null) {
             return formattedDate;
@@ -411,6 +412,6 @@ public class DateUtils {
             e.printStackTrace();
         }
         return formattedDate;
-    }*/
+    }
 
 }

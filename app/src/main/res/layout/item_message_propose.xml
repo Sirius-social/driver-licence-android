@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="android.view.Gravity" />
+        <import type="com.sirius.driverlicense.R" />
+        <import type="com.sirius.driverlicense.utils.DateUtils" />
+        <import type="androidx.core.content.ContextCompat" />
+        <variable
+            name="item"
+            type="com.sirius.driverlicense.ui.chats.chats.message.ProposeCredentialItemMessage" />
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="8dp"
+            android:layout_margin="16dp"
+            app:contentPadding="16dp"
+            app:cardUseCompatPadding="true"
+            app:cardBackgroundColor="@color/blue2">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="true"
+                    android:textColor="@color/blue"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    style="@style/Regular19"
+                    android:text="@string/message_credentials_share"/>
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/progressBar"
+                    android:indeterminateTint="@color/white"
+                    android:layout_gravity="center"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:backgroundTint="@color/white"
+
+                    android:layout_marginTop="16dp">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                style="@style/FontBold"
+                                android:textSize="16sp"
+                                android:id="@+id/title"
+                                android:layout_weight="1"
+                                android:layout_marginLeft="8dp"
+                                android:textColor="@color/blue"
+                                android:text="@{item.title}"
+                                tools:text="Permanent Resident Card"/>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:gravity="center"
+
+                                >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    style="@style/FontBold"
+                                    android:id="@+id/status"
+                                    android:textSize="12sp"
+                                    android:visibility="gone"
+                                    android:textColor="@color/white"
+                                    android:textAllCaps="true"
+                                    />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    style="@style/FontBold"
+                                    android:id="@+id/statusDate"
+                                    android:textSize="12sp"
+                                    android:textColor="@color/blue"
+                                    android:text="12/22/2021"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/Regular14"
+                            android:id="@+id/hint"
+                            android:layout_marginLeft="8dp"
+                            android:textColor="@color/blue"
+                            tools:text="USCIS"
+                            android:text="@{item.hint}"/>
+
+
+
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="gone"
+                            android:nestedScrollingEnabled="false"
+                            tools:itemCount="4"
+
+                            tools:listitem="@layout/view_items_credentials_detail"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            android:id="@+id/attachList"/>
+
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:id="@+id/buttonsLayout"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginRight="8dp"
+                        android:text="@string/action_decline"
+                        android:gravity="center"
+                        android:textAllCaps="true"
+                        style="@style/Regular15"
+                        android:padding="8dp"
+                        android:visibility="gone"
+                        android:background="@drawable/bg_accent_rounded_button_disabled"
+                        android:id="@+id/cancelBtn"
+                        android:textColor="@color/grey3"
+                        />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="8dp"
+                        android:gravity="center"
+                        android:textAllCaps="true"
+                        style="@style/Regular15"
+                        android:visibility="gone"
+                        android:padding="8dp"
+                        android:background="@drawable/bg_accent_rounded_button_normal"
+                        android:id="@+id/yesBtn"
+                        android:textColor="@color/white"
+
+                        android:text="@string/action_yes"/>
+                </LinearLayout>
+            </LinearLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/action_show_details"
+            android:gravity="center"
+
+            style="@style/Regular15"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:padding="8dp"
+            android:background="@drawable/bg_accent_rounded_button_normal"
+            android:id="@+id/showDetailsBtn"
+            android:textColor="@color/white"
+            />
+    </LinearLayout>
+</layout>

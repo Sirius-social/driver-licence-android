@@ -10,9 +10,13 @@
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
             android:id="@+id/cardView"
-            app:cardBackgroundColor="@color/blue"
+            app:cardBackgroundColor="@color/colorBlue"
             app:cardCornerRadius="8dp"
             app:cardUseCompatPadding="true"
             app:contentPadding="16dp">
@@ -26,6 +30,8 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
+                    android:id="@+id/iconView"
+                    android:src="@drawable/ic_check_outline"
                     android:layout_marginRight="16dp"
                     app:tint="@color/white"
           />
@@ -40,8 +46,16 @@
                         style="@style/Regular19"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:id="@+id/nameCredText"
+                        android:text=""
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        style="@style/Regular15"
+                        android:layout_width="match_parent"
                         android:id="@+id/text"
                         android:text="@string/message_connected_successfully"
+                        android:layout_height="wrap_content"
                         android:textColor="@color/white" />
 
                     <TextView
