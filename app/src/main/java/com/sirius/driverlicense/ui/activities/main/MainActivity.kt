@@ -1,5 +1,6 @@
 package com.sirius.driverlicense.ui.activities.main
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -41,23 +42,24 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         showPage(MenuProfileFragment())
-       /* dataBinding.navigationBottom.setOnNavigationItemSelectedListener {
-            if (it.itemId == R.id.navigation_profile) {
-                showPage(MenuProfileFragment())
-            }
+        /* dataBinding.navigationBottom.setOnNavigationItemSelectedListener {
+             if (it.itemId == R.id.navigation_profile) {
+                 showPage(MenuProfileFragment())
+             }
 
-            if (it.itemId == R.id.navigation_scan_qr) {
-                 showPage(MenuScanQrFragment())
-            }
-            if (it.itemId == R.id.navigation_chats) {
-                showPage(ContactsFragment())
-            }
+             if (it.itemId == R.id.navigation_scan_qr) {
+                  showPage(MenuScanQrFragment())
+             }
+             if (it.itemId == R.id.navigation_chats) {
+                 showPage(ContactsFragment())
+             }
 
-            return@setOnNavigationItemSelectedListener true
-        }*/
+             return@setOnNavigationItemSelectedListener true
+         }*/
         //  dataBinding.navigationBottom.onBottomNavClickListener = model.getOnBottomNavClickListner()
     }
 
+    var dialog: AlertDialog? = null
     override fun subscribe() {
         super.subscribe()
 
@@ -65,25 +67,24 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityModel>() {
               dataBinding.navigationBottom.selectedTabLiveData.value = it
           })*/
 
-          model.invitationStartLiveData.observe(this, Observer {
-              // pushPage(ValidatingFragment())
-              val item = model.getMessage(it)
-              popPage(ChatsFragment.newInstance(item))
-              //pushPage(ChatsFragment.newInstance(item))
-          })
+        model.invitationStartLiveData.observe(this, Observer {
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("Connecting...")
+            builder.setMessage("Please wait,secure connection is being established")
+            builder.setCancelable(false)
+            dialog = builder.show()
+        })
 
-          model.invitationErrorLiveData.observe(this, Observer {
-           //   pushPage(ErrorFragment.newInstance(it.second))
-              model.onShowToastLiveData.postValue(it.second)
-          })
+        model.invitationErrorLiveData.observe(this, Observer {
+            dialog?.cancel()
+            model.onShowToastLiveData.postValue(it.second)
+        })
 
-          model.invitationSuccessLiveData.observe(this, Observer {
-              val item = model.getMessage(it)
-            //  showPage(MenuFragment())
-              popPage(ChatsFragment.newInstance(item))
-
-             // pushPage(ChatsFragment.newInstance(item))
-          })
+        model.invitationSuccessLiveData.observe(this, Observer {
+            val item = model.getMessage(it)
+            dialog?.cancel()
+            popPage(ChatsFragment.newInstance(item))
+        })
     }
 
 
