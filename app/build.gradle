@@ -2,18 +2,29 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
-  //  id 'com.google.gms.google-services'
+   // id 'com.google.gms.google-services'
 }
 
 android {
     compileSdk 31
 
+    signingConfigs {
+        config {
+            keyAlias System.getenv('KEY_ALIAS')
+            keyPassword System.getenv('KEY_PASS')
+            storeFile System.getenv('KEYSTORE_FILE') ? file(System.getenv('KEYSTORE_FILE')) : null
+            storePassword System.getenv('KEYSTORE_PASS')
+        }
+
+    }
+
     defaultConfig {
         applicationId "com.sirius.driverlicense"
         minSdk 24
         targetSdk 31
-        versionCode 1
-        versionName "1.0"
+        versionCode System.getenv("VERSION_CODE") ? System.getenv("VERSION_CODE").toInteger() : 0
+        versionName System.getenv("VERSION") ?: '0'
+        signingConfig signingConfigs.config
         multiDexEnabled true
         archivesBaseName = "DriverLicense_$versionName"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -83,7 +94,7 @@ dependencies {
    implementation(name:'sdkkotlin-android-1.0-SNAPSHOT', ext:'aar')
     implementation(name:'sdkkotlin-android-1.0-SNAPSHOT-sources', ext:'jar')
 
-    //implementation 'com.sirius.sdk:sdkkotlin-android:1.0-SNAPSHOT'
+  //  implementation 'com.sirius.sdk:sdkkotlin-android:1.0-SNAPSHOT'
 
     //FIREBASE
     implementation platform('com.google.firebase:firebase-bom:28.4.0')
