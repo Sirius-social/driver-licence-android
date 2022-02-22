@@ -10,3 +10,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "DriverLicense"
 include ':app'
+include ':sirius-sdk-kotlin'
+include ':sirius-sdk-kotlin:multiplatform-crypto-libsodium-bindings'

@@ -95,8 +95,8 @@ dependencies {
   // implementation(name:'sdkkotlin-android-1.0-SNAPSHOT', ext:'aar')
   //  implementation(name:'sdkkotlin-android-1.0-SNAPSHOT-sources', ext:'jar')
 
-    implementation 'com.sirius.sdk:sdkkotlin-android:1.0-SNAPSHOT'
-
+ //   implementation 'com.sirius.sdk:sdkkotlin-android:1.0-SNAPSHOT'
+    implementation project(':sirius-sdk-kotlin')
     //FIREBASE
     implementation platform('com.google.firebase:firebase-bom:28.4.0')
     implementation 'com.google.firebase:firebase-analytics'
