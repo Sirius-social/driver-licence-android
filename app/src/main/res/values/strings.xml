@@ -55,6 +55,8 @@
 
     <string name="task_activity">Activity</string>
     <string name="active_contacts">Chats</string>
+    <string name="share_documents">Share documents</string>
+    <string name="verify_documents_title">Verify documents</string>
     <string name="drawer_scan_qr">Scan QR</string>
     <string name="navigation_organizier">Organizer</string>
     <string name="navigation_more">Profile</string>
@@ -116,5 +118,14 @@
     <string name="dialog_no">No</string>
     <string name="dialog_warning">Attention!</string>
     <string name="dialog_exit_text">Do you want to logout from this account?</string>
+    <string name="verify_police">Verifying policeman. please wait...</string>
+    <string name="verify_police_success">Policeman verified successfully</string>
+
+    <string name="sharing_documents">Sharing documents</string>
+    <string name="verify_documents_of">Documents of %s</string>
+
+    <string name="verify_police_policeman">Sending police badge to %s</string>
+    <string name="verify_police_policeman_done">Your police badge sended successfully</string>
+
 
 </resources>

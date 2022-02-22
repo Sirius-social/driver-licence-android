@@ -49,7 +49,7 @@ import javax.inject.Singleton
 @Singleton
 class SDKUseCase @Inject constructor(
     private val eventRepository: EventRepository,
-    private val messageRepository: MessageRepository,val userRepository: UserRepository
+    private val messageRepository: MessageRepository, val userRepository: UserRepository
 ) {
 
 
@@ -87,7 +87,13 @@ class SDKUseCase @Inject constructor(
         fun initEnd()
     }
 
-    fun initSdk(context: Context, userJid: String, pass: String, label : String,onInitListener: OnInitListener?) {
+    fun initSdk(
+        context: Context,
+        userJid: String,
+        pass: String,
+        label: String,
+        onInitListener: OnInitListener?
+    ) {
         onInitListener?.initStart()
         val mainDirPath = context.filesDir.absolutePath
         val walletDirPath = mainDirPath + File.separator + "wallet"
@@ -101,15 +107,16 @@ class SDKUseCase @Inject constructor(
 
         val sender = object : BaseSender() {
             override fun sendTo(endpoint: String?, data: ByteArray?): Boolean {
-                if (endpoint?.startsWith("http")==true) {
+                if (endpoint?.startsWith("http") == true) {
                     Thread(Runnable {
                         //content-type
                         val ssiAgentWire: MediaType = "application/ssi-agent-wire".toMediaType()
                         var client: OkHttpClient = OkHttpClient()
-                        Log.d("mylog200", "requset=" + String(data?: ByteArray(0)))
-                        val body: RequestBody = RequestBody.create(ssiAgentWire, data?: ByteArray(0))
+                        Log.d("mylog200", "requset=" + String(data ?: ByteArray(0)))
+                        val body: RequestBody =
+                            RequestBody.create(ssiAgentWire, data ?: ByteArray(0))
                         val request: Request = Request.Builder()
-                            .url(endpoint?:"")
+                            .url(endpoint ?: "")
                             .post(body)
                             .build()
                         client.newCall(request).execute().use { response ->
@@ -117,8 +124,8 @@ class SDKUseCase @Inject constructor(
                             response.isSuccessful
                         }
                     }).start()
-                } else if (endpoint?.startsWith("ws")==true) {
-                    sendMessToSocket(context, endpoint, data?: ByteArray(0))
+                } else if (endpoint?.startsWith("ws") == true) {
+                    sendMessToSocket(context, endpoint, data ?: ByteArray(0))
                 }
 
                 return false
@@ -126,11 +133,8 @@ class SDKUseCase @Inject constructor(
 
             override fun open(endpoint: String?) {
                 println("SOCKET open endpoint$endpoint")
-                connectToSocket(context, endpoint?:"")
+                connectToSocket(context, endpoint ?: "")
             }
-
-
-
 
 
             override fun close() {
@@ -145,31 +149,44 @@ class SDKUseCase @Inject constructor(
 
 
 
-      FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
-                //  Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                Log.w("TAG", "Fetching FCM registration token failed", task.exception)
+                GlobalScope.launch(Dispatchers.Default) {
+
+                    SiriusSDK.getInstance().initializeCorouitine(
+                        alias = walletId, pass = passForWallet,
+                        mainDirPath = mainDirPath,
+                        mediatorAddress = mediatorAddress, recipientKeys = listOf(recipientKeys),
+                        label = label, "default_mobile", baseSender = sender
+                    )
+                    ChanelHelper.getInstance().initListener()
+                    SiriusSDK.getInstance().connectToMediator()
+                    initScenario()
+                    onInitListener?.initEnd()
+                }
                 return@OnCompleteListener
             }
             val token = task.result
-          GlobalScope.launch(Dispatchers.Default) {
+            GlobalScope.launch(Dispatchers.Default) {
 
-              SiriusSDK.getInstance().initializeCorouitine(
-                  alias = walletId, pass = passForWallet,
-                  mainDirPath = mainDirPath,
-                  mediatorAddress = mediatorAddress,recipientKeys = listOf(recipientKeys),
-                  label = label,"default_mobile", baseSender = sender
-              )
-              ChanelHelper.getInstance().initListener()
-              SiriusSDK.getInstance().connectToMediator(token)
-              initScenario()
-              onInitListener?.initEnd()
-          }
+                SiriusSDK.getInstance().initializeCorouitine(
+                    alias = walletId, pass = passForWallet,
+                    mainDirPath = mainDirPath,
+                    mediatorAddress = mediatorAddress, recipientKeys = listOf(recipientKeys),
+                    label = label, "default_mobile", baseSender = sender
+                )
+                ChanelHelper.getInstance().initListener()
+                SiriusSDK.getInstance().connectToMediator(token)
+                initScenario()
+                onInitListener?.initEnd()
+            }
         })
 
 
     }
 
-    fun deleteWallet(context: Context){
+    fun deleteWallet(context: Context) {
         userRepository.logout()
         val mainDirPath = context.filesDir.absolutePath
         val walletDirPath = mainDirPath + File.separator + "wallet"
@@ -178,17 +195,22 @@ class SDKUseCase @Inject constructor(
     }
 
     private fun initScenario() {
-        ScenarioHelper.getInstance().addScenario("Inviter",InviterScenarioImpl(messageRepository))
-        ScenarioHelper.getInstance().addScenario("Invitee", InviteeScenarioImp(messageRepository,eventRepository))
-        ScenarioHelper.getInstance().addScenario("Holder", HolderScenarioImp(messageRepository,eventRepository))
-        ScenarioHelper.getInstance().addScenario("Text",TextScenarioImpl(messageRepository,eventRepository))
-        ScenarioHelper.getInstance().addScenario("Prover", ProverScenarioImpl(messageRepository,eventRepository))
-        ScenarioHelper.getInstance().addScenario("Question", QuestionAnswerScenarioImp(messageRepository,eventRepository))
+        ScenarioHelper.getInstance().addScenario("Inviter", InviterScenarioImpl(messageRepository))
+        ScenarioHelper.getInstance()
+            .addScenario("Invitee", InviteeScenarioImp(messageRepository, eventRepository))
+        ScenarioHelper.getInstance()
+            .addScenario("Holder", HolderScenarioImp(messageRepository, eventRepository))
+        ScenarioHelper.getInstance()
+            .addScenario("Text", TextScenarioImpl(messageRepository, eventRepository))
+        ScenarioHelper.getInstance()
+            .addScenario("Prover", ProverScenarioImpl(messageRepository, eventRepository))
+        ScenarioHelper.getInstance()
+            .addScenario("Question", QuestionAnswerScenarioImp(messageRepository, eventRepository))
 
     }
 
 
-    fun sendTextMessageForPairwise(pairwiseDid: String, messageText: String?)  : LocalMessage {
+    fun sendTextMessageForPairwise(pairwiseDid: String, messageText: String?): LocalMessage {
         val pairwise = PairwiseHelper.getInstance().getPairwise(theirDid = pairwiseDid)
         val message = Message.builder().setContent(messageText).build()
         val localMessage = LocalMessage(pairwiseDid = pairwiseDid)
@@ -202,9 +224,10 @@ class SDKUseCase @Inject constructor(
         return localMessage
     }
 
-    fun sendRequestToPairwise(pairwiseDid: String): LocalMessage{
+    fun sendRequestToPairwise(pairwiseDid: String): LocalMessage {
         val pairwise = PairwiseHelper.getInstance().getPairwise(theirDid = pairwiseDid)
-        val proposMessage = ProposeCredentialMessage.builder().setCredDefId("4565").setSchemaId("465").build()
+        val proposMessage =
+            ProposeCredentialMessage.builder().setCredDefId("4565").setSchemaId("465").build()
         //  val message = Message.builder().setContent(messageText).build()
         val localMessage = LocalMessage(pairwiseDid = pairwiseDid)
         localMessage.isMine = true
@@ -217,11 +240,16 @@ class SDKUseCase @Inject constructor(
         return localMessage
     }
 
-    fun sendRequestToPairwise(pairwiseDid: String, credentialsRecord: CredentialsRecord): LocalMessage{
+    fun sendRequestToPairwise(
+        pairwiseDid: String,
+        credentialsRecord: CredentialsRecord
+    ): LocalMessage {
         val pairwise = PairwiseHelper.getInstance().getPairwise(theirDid = pairwiseDid)
-        val proposMessage = ProposeCredentialMessage.builder().setCredDefId(credentialsRecord.cred_def_id).
-        setCredentialProposal(credentialsRecord.getAttributes()).setSchemaId(credentialsRecord.schema_id).build()
-      //  val message = Message.builder().setContent(messageText).build()
+        val proposMessage =
+            ProposeCredentialMessage.builder().setCredDefId(credentialsRecord.cred_def_id)
+                .setCredentialProposal(credentialsRecord.getAttributes())
+                .setSchemaId(credentialsRecord.schema_id).build()
+        //  val message = Message.builder().setContent(messageText).build()
         val localMessage = LocalMessage(pairwiseDid = pairwiseDid)
         localMessage.isMine = true
         localMessage.type = "text"
@@ -233,17 +261,18 @@ class SDKUseCase @Inject constructor(
         return localMessage
     }
 
-    fun generateInvitation() : String?{
+    fun generateInvitation(): String? {
         val inviter = ScenarioHelper.getInstance().getScenarioBy("Inviter") as? InviterScenario
         return inviter?.generateInvitation()
     }
 
-    fun sendTestQuestion(pairwiseDid: String):LocalMessage{
+    fun sendTestQuestion(pairwiseDid: String): LocalMessage {
         val pairwise = PairwiseHelper.getInstance().getPairwise(theirDid = pairwiseDid)
         val message = QuestionMessage.builder()
             .setQuestionText("Alice, are you on the phone with Bob from Faber Bank right now?")
-            .setValidResponses(listOf("Yes, it's me","No, that's not me!"))
-            .setQuestionDetail("This is optional fine-print giving context to the question and its various answers.").build()
+            .setValidResponses(listOf("Yes, it's me", "No, that's not me!"))
+            .setQuestionDetail("This is optional fine-print giving context to the question and its various answers.")
+            .build()
         val localMessage = LocalMessage(pairwiseDid = pairwiseDid)
         localMessage.isMine = true
         localMessage.sentTime = Date()
@@ -251,7 +280,7 @@ class SDKUseCase @Inject constructor(
         localMessage.message = message.serialize()
         Thread(Runnable {
             pairwise?.let {
-                Recipes.askAndWaitAnswer(SiriusSDK.getInstance().context,message,pairwise)
+                Recipes.askAndWaitAnswer(SiriusSDK.getInstance().context, message, pairwise)
             }
         }).start()
         return localMessage

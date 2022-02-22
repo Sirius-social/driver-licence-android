@@ -40,6 +40,7 @@ class MenuProfileViewModel @Inject constructor(
     val avatarOnClickLiveData = MutableLiveData<Boolean>()
     val connectionClickLiveData = MutableLiveData<ItemCredentials>()
     val scanQrClickLiveData = MutableLiveData<Boolean>()
+    val shareClickLiveData = MutableLiveData<Boolean>()
     val contacsClickLiveData = MutableLiveData<Boolean>()
     val exitClickLiveData = MutableLiveData<Boolean>()
     val avatarLiveData = MutableLiveData<String?>()
@@ -184,6 +185,10 @@ class MenuProfileViewModel @Inject constructor(
 
     fun onScanClick(v: View?) {
         scanQrClickLiveData.postValue(true)
+    }
+
+    fun onShareClick(v: View?) {
+        shareClickLiveData.postValue(true)
     }
 
     fun onContactsClick(v: View?) {

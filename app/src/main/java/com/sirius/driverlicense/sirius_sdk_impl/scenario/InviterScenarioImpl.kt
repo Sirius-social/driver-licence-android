@@ -7,11 +7,11 @@ import com.sirius.driverlicense.repository.MessageRepository
 
 class InviterScenarioImpl  constructor(val messageRepository: MessageRepository) : InviterScenario() {
     override fun onScenarioStart(id : String) {
-       // messageRepository.invitationStartLiveData.postValue(true)
+        messageRepository.invitationStartLiveData.postValue(id)
     }
 
     override fun onScenarioEnd(id : String,success: Boolean, error: String?) {
-       // messageRepository.invitationStopLiveData.postValue(Pair(success, error))
+        messageRepository.invitationPolicemanSuccessLiveData.postValue(id)
     }
 
 }

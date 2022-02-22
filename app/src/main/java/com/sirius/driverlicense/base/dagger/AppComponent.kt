@@ -26,6 +26,8 @@ import com.sirius.driverlicense.ui.contacts.ContactsFragment
 import com.sirius.driverlicense.ui.inviteUser.InviteUserFragment
 import com.sirius.driverlicense.ui.main.MainDriverFragment
 import com.sirius.driverlicense.ui.main.MainPoliceFragment
+import com.sirius.driverlicense.ui.police.DocumentShareFragment
+import com.sirius.driverlicense.ui.police.PoliceRequesterFragment
 import com.sirius.driverlicense.ui.profile.MenuProfileFragment
 import com.sirius.driverlicense.ui.scan.MenuScanQrFragment
 
@@ -82,6 +84,8 @@ interface AppComponent {
     fun inject(fragment: ConnectionCardFragment)
     fun inject(fragment: ConnectionRequestDetailFragment)
     fun inject(fragment: InviteUserFragment)
+    fun inject(fragment: PoliceRequesterFragment)
+    fun inject(fragment: DocumentShareFragment)
 
 
 }

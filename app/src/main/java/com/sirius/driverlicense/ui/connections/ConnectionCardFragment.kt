@@ -1,6 +1,7 @@
 package com.sirius.driverlicense.ui.connections
 
 import android.app.AlertDialog
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.ImageView
@@ -19,7 +20,8 @@ import com.sirius.driverlicense.ui.inviteUser.InviteUserFragment
 
 private const val CONNECTION_ITEM = "CONNECTION_ITEM"
 
-class ConnectionCardFragment : BaseFragment<FragmentConnectionCardBinding, ConnectionCardViewModel>() {
+class ConnectionCardFragment :
+    BaseFragment<FragmentConnectionCardBinding, ConnectionCardViewModel>() {
     companion object {
         @JvmStatic
         fun newInstance(connection: ItemCredentials) = ConnectionCardFragment().apply {
@@ -34,43 +36,76 @@ class ConnectionCardFragment : BaseFragment<FragmentConnectionCardBinding, Conne
 
 
     override fun setupViews() {
-         val connection =  arguments?.getSerializable(CONNECTION_ITEM) as? ItemCredentials
+        val connection = arguments?.getSerializable(CONNECTION_ITEM) as? ItemCredentials
         model.connection = connection
         super.setupViews()
 
         dataBinding.shareView.setOnClickListener {
             baseActivity.pushPage(InviteUserFragment())
         }
-        if(connection?.title?.contains("driver",true)==true){
+
+        if (connection?.title?.contains("driver", true) == true) {
             dataBinding.connectionIconView.setImageResource(R.drawable.ic_driver_license)
-        }else if(connection?.title?.contains("passport",true)==true){
-            dataBinding. connectionIconView.setImageResource(R.drawable.ic_pass)
-        }else{
+            val colorInt: Int = App.getContext().getResources().getColor(R.color.yellowMainText)
+            val csl = ColorStateList.valueOf(colorInt)
+            dataBinding.connectionIconView.imageTintList = csl
+            dataBinding.connectionIconView.setBackgroundResource(R.drawable.bg_accent_rounded_button_yellow_text)
+        } else if (connection?.title?.contains("passport", true) == true) {
+            dataBinding.connectionIconView.setImageResource(R.drawable.ic_pass)
+            val colorInt: Int = App.getContext().getResources().getColor(R.color.greenMainText)
+            val csl = ColorStateList.valueOf(colorInt)
+            dataBinding.connectionIconView.imageTintList = csl
+            dataBinding.connectionIconView.setBackgroundResource(R.drawable.bg_accent_rounded_button_green_text)
+        } else if(connection?.title?.contains("vehicle", true) == true) {
+            dataBinding.connectionIconView.setImageResource(R.drawable.ic_rent_car)
+            val colorInt: Int = App.getContext().getResources().getColor(R.color.redMainText)
+            val csl = ColorStateList.valueOf(colorInt)
+            dataBinding.connectionIconView.imageTintList = csl
+            dataBinding.connectionIconView.setBackgroundResource(R.drawable.bg_accent_rounded_button_red_text)
+        }else if(connection?.title?.contains("diploma", true) == true) {
+            dataBinding.connectionIconView.setImageResource(R.drawable.ic_diploma)
+            val colorInt: Int = App.getContext().getResources().getColor(R.color.redMainText)
+            val csl = ColorStateList.valueOf(colorInt)
+            dataBinding.connectionIconView.imageTintList = csl
+            dataBinding.connectionIconView.setBackgroundResource(R.drawable.bg_accent_rounded_button_red_text)
+        }else {
             dataBinding.connectionIconView.setImageResource(R.drawable.documents)
+            val colorInt: Int = App.getContext().getResources().getColor(R.color.redMainText)
+            val csl = ColorStateList.valueOf(colorInt)
+            dataBinding.connectionIconView.imageTintList = csl
+            dataBinding.connectionIconView.setBackgroundResource(R.drawable.bg_accent_rounded_button_red_text)
         }
-        adapter.setDataList(  model.connection?.detailList)
+
+       /* if (connection?.title?.contains("driver", true) == true) {
+            dataBinding.connectionIconView.setImageResource(R.drawable.ic_driver_license)
+        } else if (connection?.title?.contains("passport", true) == true) {
+            dataBinding.connectionIconView.setImageResource(R.drawable.ic_pass)
+        } else {
+            dataBinding.connectionIconView.setImageResource(R.drawable.documents)
+        }*/
+        adapter.setDataList(model.connection?.detailList)
 
         dataBinding.detailsRecyclerView.adapter = adapter
         dataBinding.connectionUserTextView.text = model.connection?.title
         dataBinding.connectionDescriptionTextView.text = model.connection?.credRecord?.schema_id
         dataBinding.connectionSubheaderTextView.text = model.connection?.credRecord?.cred_def_id
 
- /*       val view =   LayoutInflater.from(it.context).inflate(R.layout.dialog_connection_card,null,false)
-        val recyclerView  : RecyclerView = view.findViewById(R.id.detailsRecyclerView)
-        val nameTextView  : TextView = view.findViewById(R.id.connectionUserTextView)
-        val iconView  : ImageView = view.findViewById(R.id.connectionIconView)
-        val typeView  : TextView = view.findViewById(R.id.connectionTypeTextView)
-        val connectionDescriptionTextView  : TextView = view.findViewById(R.id.connectionDescriptionTextView)
+        /*       val view =   LayoutInflater.from(it.context).inflate(R.layout.dialog_connection_card,null,false)
+               val recyclerView  : RecyclerView = view.findViewById(R.id.detailsRecyclerView)
+               val nameTextView  : TextView = view.findViewById(R.id.connectionUserTextView)
+               val iconView  : ImageView = view.findViewById(R.id.connectionIconView)
+               val typeView  : TextView = view.findViewById(R.id.connectionTypeTextView)
+               val connectionDescriptionTextView  : TextView = view.findViewById(R.id.connectionDescriptionTextView)
 
 
 
 
-        recyclerView.adapter = adapter
+               recyclerView.adapter = adapter
 
 
-        nameTextView.text = item.name
-        connectionDescriptionTextView.text = item.hint
-*/
+               nameTextView.text = item.name
+               connectionDescriptionTextView.text = item.hint
+       */
     }
 
     override fun getLayoutRes(): Int = R.layout.fragment_connection_card
@@ -83,6 +118,7 @@ class ConnectionCardFragment : BaseFragment<FragmentConnectionCardBinding, Conne
     override fun initDagger() {
         App.getInstance().appComponent.inject(this)
     }
+
     override fun subscribe() {
 
     }

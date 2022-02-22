@@ -1,5 +1,6 @@
 package com.sirius.driverlicense.ui.activities.mainPolice
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -10,6 +11,7 @@ import com.sirius.driverlicense.base.ui.BaseActivity
 import com.sirius.driverlicense.databinding.ActivityMainBinding
 import com.sirius.driverlicense.ui.chats.chats.ChatsFragment
 import com.sirius.driverlicense.ui.main.MainPoliceFragment
+import com.sirius.driverlicense.ui.police.PoliceRequesterFragment
 import com.sirius.driverlicense.ui.profile.MenuProfileFragment
 
 
@@ -41,27 +43,43 @@ class MainActivityPolice : BaseActivity<ActivityMainBinding, MainActivityModelPo
       //  dataBinding.navigationBottom.onBottomNavClickListener = model.getOnBottomNavClickListner()
     }
 
+    var dialog: AlertDialog? = null
+
     override fun subscribe() {
         super.subscribe()
         showPage(MainPoliceFragment())
 
 
         model.invitationStartLiveData.observe(this, Observer {
-            // pushPage(ValidatingFragment())
-            val item = model.getMessage(it)
-            pushPage(ChatsFragment.newInstance(item))
+            if(it != null){
+                model.invitationStartLiveData.value = null
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("Connecting...")
+                builder.setMessage("Please wait,secure connection is being established")
+                builder.setCancelable(false)
+                dialog = builder.show()
+            }
         })
 
         model.invitationErrorLiveData.observe(this, Observer {
-            //   pushPage(ErrorFragment.newInstance(it.second))
-            model.onShowToastLiveData.postValue(it.second)
+            if(it!=null){
+                model.invitationErrorLiveData.value = null
+                dialog?.cancel()
+                model.onShowToastLiveData.postValue(it.second)
+            }
+
         })
 
-        model.invitationSuccessLiveData.observe(this, Observer {
-            val item = model.getMessage(it)
-            //  showPage(MenuFragment())
-            pushPage(ChatsFragment.newInstance(item))
+       model.invitationSuccessLiveData.observe(this, Observer {
+           if(it!=null){
+               model.invitationPolicemanSuccessLiveData.value = null
+               val item = model.getMessage(it)
+               dialog?.cancel()
+               popPage(PoliceRequesterFragment.newInstance(item))
+           }
         })
+
+
     }
 
 

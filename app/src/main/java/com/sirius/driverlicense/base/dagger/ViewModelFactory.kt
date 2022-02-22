@@ -27,6 +27,8 @@ import com.sirius.driverlicense.ui.inviteUser.InviteUserFragment
 import com.sirius.driverlicense.ui.inviteUser.InviteUserViewModel
 import com.sirius.driverlicense.ui.main.MainDriverViewModel
 import com.sirius.driverlicense.ui.main.MainPoliceViewModel
+import com.sirius.driverlicense.ui.police.DocumentShareViewModel
+import com.sirius.driverlicense.ui.police.PoliceRequesterViewModel
 import com.sirius.driverlicense.ui.profile.MenuProfileViewModel
 import com.sirius.driverlicense.ui.scan.MenuScanQrViewModel
 
@@ -226,6 +228,18 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(InviteUserViewModel::class)
     internal abstract fun bindInviteUserViewModel(viewModel: InviteUserViewModel): ViewModel
+
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(DocumentShareViewModel::class)
+    internal abstract fun bindDocumentShareViewModel(viewModel: DocumentShareViewModel): ViewModel
+
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(PoliceRequesterViewModel::class)
+    internal abstract fun bindPoliceRequesterViewModell(viewModel: PoliceRequesterViewModel): ViewModel
 
 
 

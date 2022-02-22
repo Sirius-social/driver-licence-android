@@ -1,21 +1,17 @@
 package com.sirius.driverlicense.ui.connections
 
-import android.util.Log
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-
 import com.sirius.driverlicense.R
+import com.sirius.driverlicense.base.App
 import com.sirius.driverlicense.base.ui.SimpleBaseRecyclerViewAdapter
-import com.sirius.driverlicense.databinding.ViewItemsCredentialsBinding
 import com.sirius.driverlicense.models.ui.ItemCredentials
-import com.sirius.driverlicense.ui.credentials.CredentialsDetailAdapter
 
 
 private const val CONNECTION_ITEM = 1
@@ -25,7 +21,8 @@ private const val TITLE_ITEM = 2
 class ConnectionsAdapter(private val onConnectionClick: (ItemCredentials) -> Unit) :
     SimpleBaseRecyclerViewAdapter<ItemCredentials, ConnectionsAdapter.ConnectionsViewHolder>() {
 
-
+    var isShowLoading = false
+    var isProgress = false
  /*   override fun onBind(holder: CredentialsViewHolder?, position: Int) {
         val item = getItem(position)
         holder?.bind(item)
@@ -62,6 +59,8 @@ class ConnectionsAdapter(private val onConnectionClick: (ItemCredentials) -> Uni
         val  bottomTextView : TextView = itemView.findViewById(R.id.bottomTextView)
         val  iconView : ImageView = itemView.findViewById(R.id.iconView)
         val  shareView : ImageView = itemView.findViewById(R.id.shareView)
+        val  success : ImageView = itemView.findViewById(R.id.success)
+        val  progressbar : ProgressBar = itemView.findViewById(R.id.progressbar)
         /*  override val containerView: View?
               get() = itemView
 
@@ -73,10 +72,34 @@ class ConnectionsAdapter(private val onConnectionClick: (ItemCredentials) -> Uni
             bottomTextView.text = connectionItem.title
             if(connectionItem.title?.contains("driver",true)==true){
                 iconView.setImageResource(R.drawable.ic_driver_license)
+                val colorInt: Int = App.getContext().getResources().getColor(R.color.yellowMainText)
+                val csl = ColorStateList.valueOf(colorInt)
+                iconView.imageTintList = csl
+                iconView.setBackgroundResource(R.drawable.bg_accent_rounded_button_yellow_text)
             }else if(connectionItem.title?.contains("passport",true)==true){
                 iconView.setImageResource(R.drawable.ic_pass)
+                val colorInt: Int = App.getContext().getResources().getColor(R.color.greenMainText)
+                val csl = ColorStateList.valueOf(colorInt)
+                iconView.imageTintList = csl
+                iconView.setBackgroundResource(R.drawable.bg_accent_rounded_button_green_text)
+            } else if(connectionItem.title?.contains("vehicle", true) == true) {
+                iconView.setImageResource(R.drawable.ic_rent_car)
+                val colorInt: Int = App.getContext().getResources().getColor(R.color.redMainText)
+                val csl = ColorStateList.valueOf(colorInt)
+                iconView.imageTintList = csl
+                iconView.setBackgroundResource(R.drawable.bg_accent_rounded_button_red_text)
+            }else if(connectionItem.title?.contains("diploma", true) == true) {
+                iconView.setImageResource(R.drawable.ic_diploma)
+                val colorInt: Int = App.getContext().getResources().getColor(R.color.redMainText)
+                val csl = ColorStateList.valueOf(colorInt)
+                iconView.imageTintList = csl
+                iconView.setBackgroundResource(R.drawable.bg_accent_rounded_button_red_text)
             }else{
                 iconView.setImageResource(R.drawable.documents)
+                val colorInt: Int = App.getContext().getResources().getColor(R.color.redMainText)
+                val csl = ColorStateList.valueOf(colorInt)
+                iconView.imageTintList = csl
+                iconView.setBackgroundResource(R.drawable.bg_accent_rounded_button_red_text)
             }
 
             shareView.setOnClickListener {
@@ -86,6 +109,19 @@ class ConnectionsAdapter(private val onConnectionClick: (ItemCredentials) -> Uni
             itemView.setOnClickListener {
                 onAdapterItemClick?.onItemClick(connectionItem)
             }
+
+          if(isShowLoading){
+              if(isProgress){
+                  progressbar.visibility = View.VISIBLE
+                  success.visibility = View.GONE
+              }else{
+                  progressbar.visibility = View.GONE
+                  success.visibility = View.VISIBLE
+              }
+          }else{
+              progressbar.visibility = View.GONE
+              success.visibility = View.GONE
+          }
         }
     }
 

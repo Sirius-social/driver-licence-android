@@ -24,7 +24,7 @@ class MainActivityModel @Inject constructor(
    val eventStoreLiveData = messageRepository.eventStoreLiveData
    val eventStartLiveData = messageRepository.eventStartLiveData
    val eventStopLiveData = messageRepository.eventStopLiveData
-
+    val invitationPolicemanSuccessLiveData = messageRepository.invitationPolicemanSuccessLiveData
 
     override fun onViewCreated() {
         super.onViewCreated()

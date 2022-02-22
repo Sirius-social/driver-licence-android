@@ -60,6 +60,7 @@ class MenuProfileFragment : BaseFragment<FragmentMenuProfileBinding, MenuProfile
             inviteFragment.itemCredential = item
             baseActivity.pushPage(inviteFragment)
         }
+
         dataBinding.lastConnectionsContainer.adapter = adapter
     }
 
@@ -75,17 +76,27 @@ class MenuProfileFragment : BaseFragment<FragmentMenuProfileBinding, MenuProfile
         model.nameLiveData.observe(this, Observer {
             dataBinding.nameView.text = it
         })
-        model.phoneLiveData.observe(this, Observer {
+     /*   model.phoneLiveData.observe(this, Observer {
             dataBinding.phoneView.text = it
         })
         model.nicknameLiveData.observe(this, Observer {
             dataBinding.nicknameView.text = it
         })
-
+*/
         model.scanQrClickLiveData.observe(this, Observer {
             if (it) {
                 model.scanQrClickLiveData.value = false
                 baseActivity.pushPage(MenuScanQrFragment())
+            }
+        })
+
+        model.shareClickLiveData.observe(this, Observer {
+            if (it) {
+               // throw  RuntimeException("Test Crash"); // Force a crash
+                model.shareClickLiveData.value = false
+                val inviteFragment = InviteUserFragment()
+               // inviteFragment.itemCredential = item
+                baseActivity.pushPage(inviteFragment)
             }
         })
 

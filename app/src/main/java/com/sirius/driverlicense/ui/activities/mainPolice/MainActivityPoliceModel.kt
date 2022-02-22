@@ -21,6 +21,7 @@ class MainActivityModelPolice @Inject constructor(
    val invitationStartLiveData = messageRepository.invitationStartLiveData
    val invitationErrorLiveData = messageRepository.invitationErrorLiveData
    val invitationSuccessLiveData = messageRepository.invitationSuccessLiveData
+   val invitationPolicemanSuccessLiveData = messageRepository.invitationSuccessLiveData
    val eventStoreLiveData = messageRepository.eventStoreLiveData
    val eventStartLiveData = messageRepository.eventStartLiveData
    val eventStopLiveData = messageRepository.eventStopLiveData

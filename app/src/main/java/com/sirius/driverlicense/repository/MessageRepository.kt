@@ -18,9 +18,10 @@ class MessageRepository @Inject constructor() : BaseRepository<LocalMessage, Str
     val eventStartLiveData: MutableLiveData<String> = MutableLiveData()
     val eventStoreLiveData: MutableLiveData<String> = MutableLiveData()
     val eventStopLiveData: MutableLiveData<String> = MutableLiveData()
-    val invitationStartLiveData: MutableLiveData<String> = MutableLiveData()
-    val invitationErrorLiveData: MutableLiveData<Pair<Boolean, String?>> = MutableLiveData()
-    val invitationSuccessLiveData: MutableLiveData<String> = MutableLiveData()
+    val invitationStartLiveData: MutableLiveData<String?> = MutableLiveData()
+    val invitationErrorLiveData: MutableLiveData<Pair<Boolean, String?>?> = MutableLiveData()
+    val invitationSuccessLiveData: MutableLiveData<String?> = MutableLiveData()
+    val invitationPolicemanSuccessLiveData: MutableLiveData<String?> = MutableLiveData()
 
 
     override fun createDatabase(): BaseDatabase<LocalMessage, String> {

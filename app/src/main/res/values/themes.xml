@@ -10,7 +10,7 @@
         <item name="colorSecondaryVariant">@color/colorBlue2</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/dark2BlueColor</item>
         <!-- Customize your theme here. -->
     </style>
 
@@ -24,11 +24,21 @@
     <style name="Theme.DriverLicense.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="TopBarStyle">
-        <item name="background">@color/colorBlue2</item>
+        <item name="background">@color/dark2BlueColor</item>
         <item name="android:elevation">4dp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">56dp</item>
         <item name="android:clipToPadding">false</item>
+    </style>
+
+    <style name="Theme.DriverLicense.ProgressBar">
+        <item name="colorPrimary">@color/greenMainText</item>
+        <item name="colorPrimaryVariant">@color/greenMainText</item>
+        <item name="colorOnPrimary">@color/greenMainText</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/greenMainText</item>
+        <item name="colorSecondaryVariant">@color/greenMainText</item>
+        <item name="colorOnSecondary">@color/greenMainText</item>
     </style>
 
     <style name="TopBarLogoStyle">

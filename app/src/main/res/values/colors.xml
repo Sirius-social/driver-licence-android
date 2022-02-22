@@ -35,4 +35,16 @@
     <color name="cardConnectionCredentials">#53366C</color>
 
     <color name="errorColor">#B00020</color>
+    <color name="darkBlueColor">#181c2f</color>
+    <color name="dark1BlueColor">#20263f</color>
+    <color name="dark2BlueColor">#20255a</color>
+    <color name="grayText">#5d6177</color>
+    <color name="redBackText">#fff2ee</color>
+    <color name="redMainText">#ff5e2b</color>
+    <color name="yellowBackText">#fffaea</color>
+    <color name="yellowMainText">#ffc206</color>
+    <color name="greenBackText">#f9fcf6</color>
+    <color name="greenMainText">#a5d175</color>
+    <color name="grayBackText">#f2f4fe</color>
+    <color name="blueText">#20263f</color>
 </resources>

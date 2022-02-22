@@ -14,13 +14,13 @@ class ItemCredentials : Serializable {
         this.title = title
         this.date = date
         this.isActionExist = isActionExist
-        this.credRecord = credRecord
+        this.credRecord = MyCredentialsRecord.map(credRecord)
     }
 
     var title: String? = null
     var date: Date? = null
     var isActionExist: Boolean = false
     var detailList: List<ItemCredentialsDetails> = listOf()
-    var credRecord : CredentialsRecord? =null
+    var credRecord : MyCredentialsRecord? =null
 
 }

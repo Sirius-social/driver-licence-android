@@ -20,34 +20,197 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorBlue2"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp">
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginTop="40dp"
-                android:text="logout"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:layout_marginRight="25dp"/>
             <ImageView
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:layout_gravity="right"
-
-                android:layout_marginRight="16dp"
-                android:onClick="@{viewModel::onExitClick}"
-                android:padding="14dp"
-                android:src="@drawable/ic_logout"
-                app:tint="@color/white" />
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/back" />
 
 
 
-            <LinearLayout
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="48dp"
+
+                    android:layout_alignParentLeft="true"
+                    android:layout_toLeftOf="@+id/avatarLayout"
+                    android:layout_below="@+id/nameView"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="@{viewModel::onScanClick}"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:src="@drawable/ic_qrcode"
+                            app:tint="@color/white" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:text="@string/drawer_scan_qr"
+                            android:textColor="@color/white"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="16dp"
+                        android:background="@color/grayText" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="@{viewModel::onContactsClick}"
+
+                        android:orientation="horizontal"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:src="@drawable/ic_mail"
+                            app:tint="@color/white" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:text="@string/active_contacts"
+                            android:textColor="@color/white"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/helloText"
+                    style="@style/Regular19"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginRight="32dp"
+                    android:text="Hello!"
+                    android:textColor="@color/grayText" />
+
+                <TextView
+                    android:id="@+id/nameView"
+                    style="@style/FontBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/helloText"
+                    android:layout_alignParentLeft="true"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="10dp"
+
+                    android:layout_toLeftOf="@+id/exitLayout"
+
+                    android:text="@{viewModel.userNameTextLiveData}"
+                    android:textColor="@color/white"
+                    android:textSize="25sp"
+
+                    tools:text="Igor Fedorov" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@id/avatarLayout"
+                    android:layout_marginTop="70dp"
+                    android:layout_marginRight="16dp"
+                    android:id="@+id/exitLayout"
+                    android:onClick="@{viewModel::onExitClick}"
+                    android:orientation="vertical">
+
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="right"
+
+                        android:src="@drawable/ic_logout"
+                        app:tint="@color/grayText" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+
+                        android:text="logout"
+                        android:textColor="@color/grayText"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/avatarLayout"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_rounded_button_blue"
+                    android:orientation="vertical"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:paddingBottom="16dp"
+                    android:paddingTop="16dp"
+                    >
+
+                    <ImageView
+                        android:id="@+id/logoView"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/user"
+                        app:riv_border_color="@color/white"
+                        app:riv_border_width="1dip"
+
+                        app:riv_corner_radius="12dp"
+                        app:riv_mutate_background="true"
+                        app:riv_oval="false"
+                        app:riv_tile_mode="clamp" />
+
+                    <ImageView
+                        android:id="@+id/shareView"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_toLeftOf="@id/avatarLayout"
+                        android:onClick="@{viewModel::onShareClick}"
+                        android:padding="12dp"
+                        android:src="@drawable/ic_baseline_share_24"
+                        android:visibility="visible"
+                        app:tint="@color/white" />
+
+
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+  <!--          <LinearLayout
                 android:id="@+id/topView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -56,19 +219,8 @@
                 >
 
 
-                <ImageView
-                    android:id="@+id/logoView"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_gravity="center"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/user"
-                    app:riv_border_color="@color/white"
-                    app:riv_border_width="3dip"
-                    app:riv_corner_radius="40dp"
-                    app:riv_mutate_background="true"
-                    app:riv_oval="false"
-                    app:riv_tile_mode="clamp" />
+
+
 
                 <TextView
                     android:id="@+id/nameView"
@@ -177,51 +329,61 @@
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </LinearLayout>-->
 
         </FrameLayout>
 
 
-        <TextView
-            style="@style/FontBold"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="16dp"
-            android:gravity="center"
-            android:text="Documents"
-            android:textColor="@color/black"
-            android:textSize="25sp" />
-
-        <TextView
-            android:id="@+id/emptyStateView"
-            style="@style/Regular19"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginRight="16dp"
-            android:gravity="center"
-
-            android:text="@string/scan_qr_to_licence"
-            android:textColor="@color/black"
-            android:visibility="visible" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/lastConnectionsContainer"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="-16dp"
+            android:background="@drawable/bg_rounded_button_white">
 
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="16dp"
-            android:nestedScrollingEnabled="false"
-            android:visibility="visible"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:spanCount="1"
-            tools:itemCount="4"
-            tools:listitem="@layout/item_connection" />
+            <TextView
+                style="@style/FontBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="Documents"
+                android:textColor="@color/blueText"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/emptyStateView"
+                style="@style/Regular19"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginRight="16dp"
+                android:gravity="center"
+
+                android:text="@string/scan_qr_to_licence"
+                android:textColor="@color/grayText"
+                android:visibility="visible" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/lastConnectionsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+                android:nestedScrollingEnabled="false"
+                android:visibility="visible"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="1"
+                tools:itemCount="4"
+                tools:listitem="@layout/item_connection" />
+
+        </LinearLayout>
+
 
 
     </LinearLayout>

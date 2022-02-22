@@ -64,7 +64,7 @@ class CredentialsDetailAdapter :
             if(item.value.isNullOrEmpty()){
                 binding?.textDivider?.visibility = View.GONE
             }else{
-                if(item.mimeType.contains("image") || item.name == "photo" ||item.name == "Pc   cchoto"  ){
+                if(item.mimeType.contains("image") || item.name == "photo" ||item.name == "Photo"  ){
                     binding?.hint?.text = ""
                     binding?.hint?.visibility = View.GONE
                     binding?.image?.visibility = View.VISIBLE

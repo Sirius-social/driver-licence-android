@@ -2,13 +2,14 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
-   // id 'com.google.gms.google-services'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
 }
 
 android {
-    compileSdk 31
+    compileSdk 30
 
-    signingConfigs {
+  /*  signingConfigs {
         config {
             keyAlias System.getenv('KEY_ALIAS')
             keyPassword System.getenv('KEY_PASS')
@@ -16,15 +17,15 @@ android {
             storePassword System.getenv('KEYSTORE_PASS')
         }
 
-    }
+    }*/
 
     defaultConfig {
         applicationId "com.sirius.driverlicense"
         minSdk 24
-        targetSdk 31
-        versionCode System.getenv("VERSION_CODE") ? System.getenv("VERSION_CODE").toInteger() : 0
-        versionName System.getenv("VERSION") ?: '0'
-        signingConfig signingConfigs.config
+        targetSdk 30
+        versionCode 4
+        versionName "2.4"
+
         multiDexEnabled true
         archivesBaseName = "DriverLicense_$versionName"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -91,10 +92,10 @@ dependencies {
 
     implementation 'me.dm7.barcodescanner:zxing:1.9.13'
 
-   implementation(name:'sdkkotlin-android-1.0-SNAPSHOT', ext:'aar')
-    implementation(name:'sdkkotlin-android-1.0-SNAPSHOT-sources', ext:'jar')
+  // implementation(name:'sdkkotlin-android-1.0-SNAPSHOT', ext:'aar')
+  //  implementation(name:'sdkkotlin-android-1.0-SNAPSHOT-sources', ext:'jar')
 
-  //  implementation 'com.sirius.sdk:sdkkotlin-android:1.0-SNAPSHOT'
+    implementation 'com.sirius.sdk:sdkkotlin-android:1.0-SNAPSHOT'
 
     //FIREBASE
     implementation platform('com.google.firebase:firebase-bom:28.4.0')
@@ -111,7 +112,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics:19.0.0'
     implementation 'com.makeramen:roundedimageview:2.3.0'
 
-    implementation 'com.google.firebase:firebase-messaging:22.0.0'
+    implementation 'com.google.firebase:firebase-messaging:23.0.0'
+    implementation 'com.google.firebase:firebase-crashlytics:18.2.8'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

@@ -15,6 +15,7 @@ import com.sirius.driverlicense.databinding.ActivitySplashBinding
 import com.sirius.driverlicense.ui.activities.auth.AuthActivity
 import com.sirius.driverlicense.ui.activities.main.MainActivity
 import com.sirius.driverlicense.ui.activities.mainPolice.MainActivityPolice
+import com.sirius.driverlicense.ui.police.DocumentShareFragment
 
 
 class LoaderActivity : BaseActivity<ActivityLoaderBinding, LoaderActivityModel>() {
@@ -68,7 +69,6 @@ class LoaderActivity : BaseActivity<ActivityLoaderBinding, LoaderActivityModel>(
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         model.initSdk(this, model.isPolice)
     }
 

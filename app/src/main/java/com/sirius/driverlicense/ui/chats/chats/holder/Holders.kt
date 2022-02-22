@@ -1,6 +1,7 @@
 package com.sirius.driverlicense.ui.chats.chats.holder
 
 import android.app.AlertDialog
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
@@ -61,12 +62,36 @@ class ProposeCredentialMessageViewHolder(itemView: View) : MessageViewHolder(ite
             //   binding?.attachList?.isNestedScrollingEnabled = false
             recyclerView.adapter = adapter
 
-            if(item.name?.contains("driver",true)==true){
+            if (item.name?.contains("driver", true) == true) {
                 iconView.setImageResource(R.drawable.ic_driver_license)
-            }else if(item.name?.contains("passport",true)==true){
+                val colorInt: Int = App.getContext().getResources().getColor(R.color.yellowMainText)
+                val csl = ColorStateList.valueOf(colorInt)
+                iconView.imageTintList = csl
+                iconView.setBackgroundResource(R.drawable.bg_accent_rounded_button_yellow_text)
+            } else if (item.name?.contains("passport", true) == true) {
                 iconView.setImageResource(R.drawable.ic_pass)
-            }else{
+                val colorInt: Int = App.getContext().getResources().getColor(R.color.greenMainText)
+                val csl = ColorStateList.valueOf(colorInt)
+                iconView.imageTintList = csl
+                iconView.setBackgroundResource(R.drawable.bg_accent_rounded_button_green_text)
+            }  else if(item.name?.contains("vehicle", true) == true) {
+                iconView.setImageResource(R.drawable.ic_rent_car)
+                val colorInt: Int = App.getContext().getResources().getColor(R.color.redMainText)
+                val csl = ColorStateList.valueOf(colorInt)
+                iconView.imageTintList = csl
+                iconView.setBackgroundResource(R.drawable.bg_accent_rounded_button_red_text)
+            }else if(item.name?.contains("diploma", true) == true) {
+                iconView.setImageResource(R.drawable.ic_diploma)
+                val colorInt: Int = App.getContext().getResources().getColor(R.color.redMainText)
+                val csl = ColorStateList.valueOf(colorInt)
+                iconView.imageTintList = csl
+                iconView.setBackgroundResource(R.drawable.bg_accent_rounded_button_red_text)
+            }else {
                 iconView.setImageResource(R.drawable.documents)
+                val colorInt: Int = App.getContext().getResources().getColor(R.color.redMainText)
+                val csl = ColorStateList.valueOf(colorInt)
+                iconView.imageTintList = csl
+                iconView.setBackgroundResource(R.drawable.bg_accent_rounded_button_red_text)
             }
 
             nameTextView.text = item.name
@@ -149,12 +174,36 @@ class OfferMessageViewHolder(itemView: View) : MessageViewHolder(itemView) {
          //   binding?.attachList?.isNestedScrollingEnabled = false
             recyclerView.adapter = adapter
 
-            if(item.name?.contains("driver",true)==true){
+            if (item.name?.contains("driver", true) == true) {
                 iconView.setImageResource(R.drawable.ic_driver_license)
-            }else if(item.name?.contains("passport",true)==true){
+                val colorInt: Int = App.getContext().getResources().getColor(R.color.yellowMainText)
+                val csl = ColorStateList.valueOf(colorInt)
+                iconView.imageTintList = csl
+                iconView.setBackgroundResource(R.drawable.bg_accent_rounded_button_yellow_text)
+            } else if (item.name?.contains("passport", true) == true) {
                 iconView.setImageResource(R.drawable.ic_pass)
-            }else{
+                val colorInt: Int = App.getContext().getResources().getColor(R.color.greenMainText)
+                val csl = ColorStateList.valueOf(colorInt)
+                iconView.imageTintList = csl
+                iconView.setBackgroundResource(R.drawable.bg_accent_rounded_button_green_text)
+            }  else if(item.name?.contains("vehicle", true) == true) {
+                iconView.setImageResource(R.drawable.ic_rent_car)
+                val colorInt: Int = App.getContext().getResources().getColor(R.color.redMainText)
+                val csl = ColorStateList.valueOf(colorInt)
+                iconView.imageTintList = csl
+                iconView.setBackgroundResource(R.drawable.bg_accent_rounded_button_red_text)
+            }else if(item.name?.contains("diploma", true) == true) {
+                iconView.setImageResource(R.drawable.ic_diploma)
+                val colorInt: Int = App.getContext().getResources().getColor(R.color.redMainText)
+                val csl = ColorStateList.valueOf(colorInt)
+                iconView.imageTintList = csl
+                iconView.setBackgroundResource(R.drawable.bg_accent_rounded_button_red_text)
+            }else {
                 iconView.setImageResource(R.drawable.documents)
+                val colorInt: Int = App.getContext().getResources().getColor(R.color.redMainText)
+                val csl = ColorStateList.valueOf(colorInt)
+                iconView.imageTintList = csl
+                iconView.setBackgroundResource(R.drawable.bg_accent_rounded_button_red_text)
             }
 
             nameTextView.text = item.name
@@ -194,6 +243,11 @@ class OfferAcceptedMessageViewHolder(itemView: View) : MessageViewHolder(itemVie
             binding?.iconView?.setImageResource(R.drawable.ic_driver_license)
         }else if(item.getTitle()?.contains("passport",true)==true){
             binding?.iconView?.setImageResource(R.drawable.ic_pass)
+        }
+        else if(item.getTitle().contains("vehicle", true) == true) {
+            binding?.iconView?.setImageResource(R.drawable.ic_rent_car)
+        }else if(item.getTitle().contains("diploma", true) == true) {
+            binding?.iconView?.setImageResource(R.drawable.ic_diploma)
         }else{
             binding?.iconView?.setImageResource(R.drawable.documents)
         }
@@ -224,13 +278,38 @@ class OfferAcceptedMessageViewHolder(itemView: View) : MessageViewHolder(itemVie
             //   binding?.attachList?.isNestedScrollingEnabled = false
             recyclerView.adapter = adapter
 
-            if(item.name?.contains("driver",true)==true){
+            if (item.name?.contains("driver", true) == true) {
                 iconView.setImageResource(R.drawable.ic_driver_license)
-            }else if(item.name?.contains("passport",true)==true){
+                val colorInt: Int = App.getContext().getResources().getColor(R.color.yellowMainText)
+                val csl = ColorStateList.valueOf(colorInt)
+                iconView.imageTintList = csl
+                iconView.setBackgroundResource(R.drawable.bg_accent_rounded_button_yellow_text)
+            } else if (item.name?.contains("passport", true) == true) {
                 iconView.setImageResource(R.drawable.ic_pass)
-            }else{
+                val colorInt: Int = App.getContext().getResources().getColor(R.color.greenMainText)
+                val csl = ColorStateList.valueOf(colorInt)
+                iconView.imageTintList = csl
+                iconView.setBackgroundResource(R.drawable.bg_accent_rounded_button_green_text)
+            }  else if(item.name?.contains("vehicle", true) == true) {
+                iconView.setImageResource(R.drawable.ic_rent_car)
+                val colorInt: Int = App.getContext().getResources().getColor(R.color.redMainText)
+                val csl = ColorStateList.valueOf(colorInt)
+                iconView.imageTintList = csl
+                iconView.setBackgroundResource(R.drawable.bg_accent_rounded_button_red_text)
+            }else if(item.name?.contains("diploma", true) == true) {
+                iconView.setImageResource(R.drawable.ic_diploma)
+                val colorInt: Int = App.getContext().getResources().getColor(R.color.redMainText)
+                val csl = ColorStateList.valueOf(colorInt)
+                iconView.imageTintList = csl
+                iconView.setBackgroundResource(R.drawable.bg_accent_rounded_button_red_text)
+            }else {
                 iconView.setImageResource(R.drawable.documents)
+                val colorInt: Int = App.getContext().getResources().getColor(R.color.redMainText)
+                val csl = ColorStateList.valueOf(colorInt)
+                iconView.imageTintList = csl
+                iconView.setBackgroundResource(R.drawable.bg_accent_rounded_button_red_text)
             }
+
 
             nameTextView.text = item.name
             connectionDescriptionTextView.text = item.hint
@@ -277,12 +356,36 @@ class ProverMessageViewHolder(itemView: View) : MessageViewHolder(itemView) {
             //   binding?.attachList?.isNestedScrollingEnabled = false
             recyclerView.adapter = adapter
 
-            if(item.name?.contains("driver",true)==true){
+            if (item.name?.contains("driver", true) == true) {
                 iconView.setImageResource(R.drawable.ic_driver_license)
-            }else if(item.name?.contains("passport",true)==true){
+                val colorInt: Int = App.getContext().getResources().getColor(R.color.yellowMainText)
+                val csl = ColorStateList.valueOf(colorInt)
+                iconView.imageTintList = csl
+                iconView.setBackgroundResource(R.drawable.bg_accent_rounded_button_yellow_text)
+            } else if (item.name?.contains("passport", true) == true) {
                 iconView.setImageResource(R.drawable.ic_pass)
-            }else{
+                val colorInt: Int = App.getContext().getResources().getColor(R.color.greenMainText)
+                val csl = ColorStateList.valueOf(colorInt)
+                iconView.imageTintList = csl
+                iconView.setBackgroundResource(R.drawable.bg_accent_rounded_button_green_text)
+            }  else if(item.name?.contains("vehicle", true) == true) {
+                iconView.setImageResource(R.drawable.ic_rent_car)
+                val colorInt: Int = App.getContext().getResources().getColor(R.color.redMainText)
+                val csl = ColorStateList.valueOf(colorInt)
+                iconView.imageTintList = csl
+                iconView.setBackgroundResource(R.drawable.bg_accent_rounded_button_red_text)
+            }else if(item.name?.contains("diploma", true) == true) {
+                iconView.setImageResource(R.drawable.ic_diploma)
+                val colorInt: Int = App.getContext().getResources().getColor(R.color.redMainText)
+                val csl = ColorStateList.valueOf(colorInt)
+                iconView.imageTintList = csl
+                iconView.setBackgroundResource(R.drawable.bg_accent_rounded_button_red_text)
+            }else {
                 iconView.setImageResource(R.drawable.documents)
+                val colorInt: Int = App.getContext().getResources().getColor(R.color.redMainText)
+                val csl = ColorStateList.valueOf(colorInt)
+                iconView.imageTintList = csl
+                iconView.setBackgroundResource(R.drawable.bg_accent_rounded_button_red_text)
             }
 
             nameTextView.text = item.name
@@ -332,6 +435,10 @@ class ProverAcceptedMessageViewHolder(itemView: View) : MessageViewHolder(itemVi
             binding?.iconView?.setImageResource(R.drawable.ic_driver_license)
         }else if(prover.name?.contains("passport",true)==true){
             binding?.iconView?.setImageResource(R.drawable.ic_pass)
+        }else if(item.getTitle().contains("vehicle", true) == true) {
+            binding?.iconView?.setImageResource(R.drawable.ic_rent_car)
+        }else if(item.getTitle().contains("diploma", true) == true) {
+            binding?.iconView?.setImageResource(R.drawable.ic_diploma)
         }else{
             binding?.iconView?.setImageResource(R.drawable.documents)
         }
@@ -351,13 +458,38 @@ class ProverAcceptedMessageViewHolder(itemView: View) : MessageViewHolder(itemVi
             //   binding?.attachList?.isNestedScrollingEnabled = false
             recyclerView.adapter = adapter
 
-            if(item.name?.contains("driver",true)==true){
+            if (item.name?.contains("driver", true) == true) {
                 iconView.setImageResource(R.drawable.ic_driver_license)
-            }else if(item.name?.contains("passport",true)==true){
+                val colorInt: Int = App.getContext().getResources().getColor(R.color.yellowMainText)
+                val csl = ColorStateList.valueOf(colorInt)
+                iconView.imageTintList = csl
+                iconView.setBackgroundResource(R.drawable.bg_accent_rounded_button_yellow_text)
+            } else if (item.name?.contains("passport", true) == true) {
                 iconView.setImageResource(R.drawable.ic_pass)
-            }else{
+                val colorInt: Int = App.getContext().getResources().getColor(R.color.greenMainText)
+                val csl = ColorStateList.valueOf(colorInt)
+                iconView.imageTintList = csl
+                iconView.setBackgroundResource(R.drawable.bg_accent_rounded_button_green_text)
+            } else if(item.name?.contains("vehicle", true) == true) {
+                iconView.setImageResource(R.drawable.ic_rent_car)
+                val colorInt: Int = App.getContext().getResources().getColor(R.color.redMainText)
+                val csl = ColorStateList.valueOf(colorInt)
+                iconView.imageTintList = csl
+                iconView.setBackgroundResource(R.drawable.bg_accent_rounded_button_red_text)
+            }else if(item.name?.contains("diploma", true) == true) {
+                iconView.setImageResource(R.drawable.ic_diploma)
+                val colorInt: Int = App.getContext().getResources().getColor(R.color.redMainText)
+                val csl = ColorStateList.valueOf(colorInt)
+                iconView.imageTintList = csl
+                iconView.setBackgroundResource(R.drawable.bg_accent_rounded_button_red_text)
+            } else {
                 iconView.setImageResource(R.drawable.documents)
-            }
+                val colorInt: Int = App.getContext().getResources().getColor(R.color.redMainText)
+                val csl = ColorStateList.valueOf(colorInt)
+                iconView.imageTintList = csl
+                iconView.setBackgroundResource(R.drawable.bg_accent_rounded_button_red_text)
+
+        }
 
             nameTextView.text = item.name
             connectionDescriptionTextView.text = item.hint

@@ -122,6 +122,7 @@ public class WebSocketService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        Log.d("mylog200","WEBSOCKET CREATE");
         networkStateReceiver = new NetworkStateReceiver();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
@@ -145,6 +146,7 @@ public class WebSocketService extends Service {
         if (EXTRA_INITIALIZE.equals(intent.getAction())) {
             connect();
         } else if (EXTRA_CONNECT.equals(intent.getAction())) {
+            Log.d("mylog200","EXTRA_CONNECT dataString="+intent.getAction());
             getWebSocket(intent.getStringExtra("url"));
         } else if (EXTRA_SEND.equals(intent.getAction())) {
             byte[] data = intent.getByteArrayExtra("data");
