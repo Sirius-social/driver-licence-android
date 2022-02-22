@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="sirius-sdk-kotlin-jvm-1.0-SNAPSHOT">
+    <output-path>E:\Repository\DriverLicenceAndroid\sirius-sdk-kotlin\build\libs</output-path>
+    <root id="archive" name="sirius-sdk-kotlin-jvm-1.0-SNAPSHOT.jar" />
+  </artifact>
+</component>
