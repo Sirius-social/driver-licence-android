@@ -9,22 +9,21 @@ plugins {
 android {
     compileSdk 30
 
-  /*  signingConfigs {
+    signingConfigs {
         config {
             keyAlias System.getenv('KEY_ALIAS')
             keyPassword System.getenv('KEY_PASS')
             storeFile System.getenv('KEYSTORE_FILE') ? file(System.getenv('KEYSTORE_FILE')) : null
             storePassword System.getenv('KEYSTORE_PASS')
         }
-
-    }*/
+    }
 
     defaultConfig {
         applicationId "com.sirius.driverlicense"
         minSdk 24
         targetSdk 30
-        versionCode 4
-        versionName "2.4"
+        versionCode System.getenv("VERSION_CODE") ? System.getenv("VERSION_CODE").toInteger() : 1
+        versionName System.getenv("VERSION") ?: '1.0'
 
         multiDexEnabled true
         archivesBaseName = "DriverLicense_$versionName"
@@ -41,6 +40,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
     compileOptions {
